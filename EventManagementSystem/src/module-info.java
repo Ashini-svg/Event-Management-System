@@ -4,5 +4,5 @@
 /**
  * 
  */
-module Event {
+module event.management.system {
 }
