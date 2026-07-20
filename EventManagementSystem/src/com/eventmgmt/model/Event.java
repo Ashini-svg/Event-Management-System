@@ -1,34 +1,30 @@
 package com.eventmgmt.model;
 
-public class Event {
+import java.time.LocalDateTime;
 
+public class Event implements Comparable<Event> {
     // Attributes
     private String eventId;
-    private String eventName;
-    private String eventType;
-    private String venue;
-    private String date;
-    private String time;
+    private String title;
+    private String category;
+    private String venueId;
+    private LocalDateTime eventDateTime;
     private int capacity;
-    private int registeredParticipants;
+    private int attendeesCount;
 
     // Default Constructor
-    public Event() {
-    }
+    public Event() {}
 
     // Parameterized Constructor
-    public Event(String eventId, String eventName, String eventType,
-                 String venue, String date, String time,
-                 int capacity) {
+    public Event(String eventId, String title, String category, String venueId, LocalDateTime eventDateTime, int capacity) {
 
         this.eventId = eventId;
-        this.eventName = eventName;
-        this.eventType = eventType;
-        this.venue = venue;
-        this.date = date;
-        this.time = time;
+        this.title = title;
+        this.category = category;
+        this.venueId = venueId;
+        this.eventDateTime = eventDateTime;
         this.capacity = capacity;
-        this.registeredParticipants = 0;
+        this.attendeesCount = 0;
     }
 
     // Getters
@@ -36,32 +32,28 @@ public class Event {
         return eventId;
     }
 
-    public String getEventName() {
-        return eventName;
+    public String getTitle() {
+        return title;
     }
 
-    public String getEventType() {
-        return eventType;
+    public String getCategory() {
+        return category;
     }
 
-    public String getVenue() {
-        return venue;
+    public String getVenueId() {
+        return venueId;
     }
 
-    public String getDate() {
-        return date;
-    }
-
-    public String getTime() {
-        return time;
+    public LocalDateTime getEventDateTime() {
+    	return eventDateTime;
     }
 
     public int getCapacity() {
         return capacity;
     }
 
-    public int getRegisteredParticipants() {
-        return registeredParticipants;
+    public int getAttendeesCount() {
+        return attendeesCount;
     }
 
     // Setters
@@ -69,67 +61,62 @@ public class Event {
         this.eventId = eventId;
     }
 
-    public void setEventName(String eventName) {
-        this.eventName = eventName;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public void setEventType(String eventType) {
-        this.eventType = eventType;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
-    public void setVenue(String venue) {
-        this.venue = venue;
+    public void setVenueId(String venueId) {
+        this.venueId = venueId;
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
+    public void setEventDateTime(LocalDateTime eventDateTime) {
+    	this.eventDateTime = eventDateTime;
     }
 
     public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
 
-    public void setRegisteredParticipants(int registeredParticipants) {
-        this.registeredParticipants = registeredParticipants;
+    public void setAttendeesCount(int attendeesCount) {
+        this.attendeesCount = attendeesCount;
     }
-
-    // Register a participant
-    public boolean registerParticipant() {
-        if (registeredParticipants < capacity) {
-            registeredParticipants++;
-            return true;
-        }
-        return false;
-    }
-
-    // Cancel a registration
-    public boolean cancelRegistration() {
-        if (registeredParticipants > 0) {
-            registeredParticipants--;
-            return true;
-        }
-        return false;
-    }
-
-    // Check whether event is full
+    
+    // Helper methods
     public boolean isFull() {
-        return registeredParticipants >= capacity;
+    	return this.attendeesCount >= this.capacity;
+    }
+    
+    public void incrementAttendees() {
+    	if (!isFull()) {
+    		this.attendeesCount++;
+    	}
+    }
+    
+    public void decrementAttendees() {
+    	if (this.attendeesCount > 0) {
+    		this.attendeesCount--;
+    	}
+    }
+    
+    //Binary Search Tree comparison logic based on ID keys
+    @Override
+    public int compareTo(Event other) {
+    	return this.eventId.compareTo(other.eventId);
     }
 
-    // Display event details
+    // Overriding toString() for clear outputs
     @Override
     public String toString() {
         return "Event ID: " + eventId +
-                "\nEvent Name: " + eventName +
-                "\nType: " + eventType +
-                "\nVenue: " + venue +
-                "\nDate: " + date +
-                "\nTime: " + time +
+                "\nTitle: " + title +
+                "\nCategory: " + category +
+                "\nVenueID: " + venueId +
+                "\nDate & Time: " + eventDateTime +
                 "\nCapacity: " + capacity +
-                "\nRegistered: " + registeredParticipants;
+                "\nRegistered Attendees: " + attendeesCount;
     }
 }

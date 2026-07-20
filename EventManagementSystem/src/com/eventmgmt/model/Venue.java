@@ -8,24 +8,18 @@ public class Venue {
     private String location;
     private int capacity;
     private boolean available;
-    
 
     // Default Constructor
-    public Venue() {
-    }
-
+    public Venue() {}
 
     // Parameterized Constructor
-    public Venue(String venueId, String venueName, 
-                 String location, int capacity) {
-
+    public Venue(String venueId, String venueName, String location, int capacity) {
         this.venueId = venueId;
         this.venueName = venueName;
         this.location = location;
         this.capacity = capacity;
         this.available = true;
     }
-
 
     // Getters
     public String getVenueId() {
@@ -48,7 +42,6 @@ public class Venue {
         return available;
     }
 
-
     // Setters
     public void setVenueId(String venueId) {
         this.venueId = venueId;
@@ -69,24 +62,10 @@ public class Venue {
     public void setAvailable(boolean available) {
         this.available = available;
     }
-
-
-    // Book venue
-    public void bookVenue() {
-        available = false;
-    }
-
-
-    // Release venue
-    public void releaseVenue() {
-        available = true;
-    }
-
-
-    // Display venue details
+    
+    // Overriding toString() for clear outputs
     @Override
     public String toString() {
-
         return "Venue ID: " + venueId +
                 "\nVenue Name: " + venueName +
                 "\nLocation: " + location +
