@@ -35,7 +35,7 @@ public class GraphNode {
 	
 	// Method to connect another node (Add a neighboring venue to this node)
 	
-	public void addAdjecentNode(GraphNode node) {
+	public void addAdjacentNode(GraphNode node) {
 		if(!adjacentNodes.contains(node)) {
 			adjacentNodes.add(node);
 		}
