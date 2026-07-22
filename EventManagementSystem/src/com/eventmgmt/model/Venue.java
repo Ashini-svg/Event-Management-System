@@ -1,6 +1,7 @@
 package com.eventmgmt.model;
 
-public class Venue {
+//Implements Comparable so Venue objects can be sorted.
+public class Venue implements Comparable<Venue> {
 	
     // Attributes
     private String venueId;
@@ -70,6 +71,15 @@ public class Venue {
                 "\nVenue Name: " + venueName +
                 "\nLocation: " + location +
                 "\nCapacity: " + capacity +
-                "\nAvailable: " + available;
+                "\nAvailable: " + available;    
+      
+    }
+ 
+    
+    // Allows Venue objects to be compared alphabetically by venue name.
+    // This is used by sorting algorithms such as Merge Sort.
+    @Override
+    public int compareTo(Venue other) {
+        return this.venueName.compareTo(other.venueName);
     }
 }
