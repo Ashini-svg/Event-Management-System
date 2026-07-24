@@ -105,7 +105,7 @@ public class Event implements Comparable<Event> {
     //Binary Search Tree comparison logic based on ID keys
     @Override
     public int compareTo(Event other) {
-    	return this.eventId.compareTo(other.eventId);
+    	return this.eventId.compareToIgnoreCase(other.eventId);
     }
 
     // Overriding toString() for clear outputs
