@@ -33,7 +33,7 @@ public class Booking {
 		return attendeeId;
 	}
 	
-	public LocalDateTime getBookingTimestamp() {
+	public LocalDateTime getBookingDate() {
 		return bookingDateTime;
 	}
 	
@@ -50,7 +50,7 @@ public class Booking {
 		this.attendeeId = attendeeId;
 	}
 	
-	public void setBookingTimestamp(LocalDateTime bookingDateTime) {
+	public void setBookingDateTime(LocalDateTime bookingDateTime) {
 		this.bookingDateTime = bookingDateTime;
 	}
 	

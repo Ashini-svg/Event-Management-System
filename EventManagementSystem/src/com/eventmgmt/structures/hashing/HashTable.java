@@ -20,6 +20,7 @@ public class HashTable {
     private HashNode[] buckets;
     private int capacity;
     private int size;
+    private static final double LOAD_FACTOR = 0.75;
 
     public HashTable(int capacity) {
         this.capacity = capacity;
@@ -33,15 +34,17 @@ public class HashTable {
 
     // Custom Hash Function
     private int getBucketIndex(String key) {
-        int hashCode = key.hashCode();
-        int index = Math.abs(hashCode) % capacity;
-        return index;
+        return Math.abs(key.toLowerCase().hashCode()) % capacity;
     }
 
     // Insert or Update Key-Value pair
     public void put(String key, Attendee value) {
         if (key == null || value == null) {
             throw new IllegalArgumentException("Key or Value cannot be null");
+        }
+        
+        if ((double) size / capacity >= LOAD_FACTOR) {
+        	resize();
         }
 
         int bucketIndex = getBucketIndex(key);
@@ -63,6 +66,23 @@ public class HashTable {
         newNode.next = head;
         buckets[bucketIndex] = newNode;
     }
+    
+    private void resize() {
+    	int oldCapacity = capacity;
+    	HashNode[] oldBuckets = buckets;
+    	
+    	capacity = oldCapacity * 2;
+    	buckets = new HashNode[capacity];
+    	size = 0;
+    	
+    	for (int i = 0; i < oldCapacity; i++) {
+    		HashNode head = oldBuckets[i];
+    		while (head != null) {
+    			put(head.key, head.value);
+    			head = head.next;
+    		}
+    	}
+    }
 
     // Retrieve element by Key
     public Attendee get(String key) {
@@ -83,6 +103,8 @@ public class HashTable {
    
     // Remove element by Key
     public Attendee remove(String key) {
+    	if (key == null) return null;
+    	
         int bucketIndex = getBucketIndex(key);
         HashNode head = buckets[bucketIndex];
         HashNode prev = null;

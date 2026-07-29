@@ -19,8 +19,8 @@ public class InsertionSort {
 			
 			int j = i -1;
 			
-			// Shift elements of bookings that are greater than key.getBookingTimestamp()
-			while (j >= 0 && bookings[j] != null && bookings[j].getBookingTimestamp().isAfter(key.getBookingTimestamp())) {
+			// Shift elements of bookings that are greater than key.getBookingDateTime()
+			while (j >= 0 && bookings[j] != null && bookings[j].getBookingDate().isAfter(key.getBookingDate())) {
 				bookings[j + 1] = bookings[j];
 				j = j - 1;
 			}
