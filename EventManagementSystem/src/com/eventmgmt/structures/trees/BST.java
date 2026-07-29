@@ -4,7 +4,7 @@ import com.eventmgmt.model.Event;
 
 public class BST {
 	
-	//Root node of the Binary Search Tree
+	//Root node of the BST
     private BSTNode root;
 
     //Constructor
@@ -25,13 +25,13 @@ public class BST {
         }
 
         //Go to left subtree
-        if (event.compareTo(current.event) < 0) {
-            current.left = insertRecursive(current.left, event);
+        if (event.compareTo(current.getEvent()) < 0) {
+            current.setLeft(insertRecursive(current.getLeft(), event));
         }
 
         //Go to right subtree
-        else if (event.compareTo(current.event) > 0) {
-            current.right = insertRecursive(current.right, event);
+        else if (event.compareTo(current.getEvent()) > 0) {
+            current.setRight(insertRecursive(current.getRight(), event));
         }
 
         //Duplicate IDs are ignored
@@ -45,18 +45,18 @@ public class BST {
 
         while (current != null) {
 
-            int comparison = eventId.compareTo(current.event.getEventId());
+        	int comparison = eventId.compareTo(current.getEvent().getEventId());
 
             if (comparison == 0) {
-                return current.event;
-            }
+            	return current.getEvent();
+            	}
 
             if (comparison < 0) {
-                current = current.left;
+                current = current.getLeft();
             } else {
-                current = current.right;
+            	current = current.getRight();
             }
-        }
+         }
 
         return null;
     }
@@ -72,40 +72,36 @@ public class BST {
             return null;
         }
 
-        int comparison = eventId.compareTo(current.event.getEventId());
+        int comparison = eventId.compareTo(current.getEvent().getEventId());
 
         if (comparison < 0) {
-
-            current.left = deleteRecursive(current.left, eventId);
+        	current.setLeft(deleteRecursive(current.getLeft(), eventId));
 
         } else if (comparison > 0) {
-
-            current.right = deleteRecursive(current.right, eventId);
+        	current.setRight(deleteRecursive(current.getRight(), eventId));
 
         } else {
 
             //Case 1 : No children
-            if (current.left == null && current.right == null) {
-                return null;
+        	if (current.getLeft() == null && current.getRight() == null) {
+        		return null;
             }
 
             //Case 2 : One child
-            if (current.left == null) {
-                return current.right;
-            }
+        	if (current.getLeft() == null)
+        	    return current.getRight();
 
-            if (current.right == null) {
-                return current.left;
-            }
+        	if (current.getRight() == null)
+        	    return current.getLeft();
 
             //Case 3 : Two children
-            Event smallest = findSmallest(current.right);
-
-            current.event = smallest;
-
-            current.right = deleteRecursive(
-                    current.right,
-                    smallest.getEventId());
+            Event smallest = findSmallest(current.getRight());
+            
+            current.setEvent(smallest);
+            
+            current.setRight(deleteRecursive(
+                    current.getRight(),
+                    smallest.getEventId()));
         }
 
         return current;
@@ -114,11 +110,11 @@ public class BST {
     //Find smallest node in a subtree
     private Event findSmallest(BSTNode current) {
 
-        while (current.left != null) {
-            current = current.left;
-        }
+    	while (current.getLeft() != null) {
+    	    current = current.getLeft();
+    	}
 
-        return current.event;
+    	return current.getEvent();
     }
 
     //INORDER
@@ -130,12 +126,12 @@ public class BST {
 
         if (current != null) {
 
-            inorderRecursive(current.left);
+        	inorderRecursive(current.getLeft());
 
-            System.out.println(current.event);
+        	System.out.println(current.getEvent());
             System.out.println();
 
-            inorderRecursive(current.right);
+            inorderRecursive(current.getRight());
         }
     }
 
@@ -148,12 +144,12 @@ public class BST {
 
         if (current != null) {
 
-            System.out.println(current.event);
+        	System.out.println(current.getEvent());
             System.out.println();
 
-            preorderRecursive(current.left);
+            preorderRecursive(current.getLeft());
 
-            preorderRecursive(current.right);
+            preorderRecursive(current.getRight());
         }
     }
 
@@ -166,12 +162,12 @@ public class BST {
 
         if (current != null) {
 
-            postorderRecursive(current.left);
+        	postorderRecursive(current.getLeft());
 
-            postorderRecursive(current.right);
+        	postorderRecursive(current.getRight());
 
-            System.out.println(current.event);
+        	System.out.println(current.getEvent());
             System.out.println();
         }
-    }	
+    }
 }
