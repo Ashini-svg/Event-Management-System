@@ -2,7 +2,6 @@ package com.eventmgmt.structures.graphs;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import com.eventmgmt.model.Venue;
 
 public class Graph {
@@ -26,16 +25,18 @@ public class Graph {
 	
 	// Adds a venue as a graph node
 	public void addVenue(Venue venue) {
-		nodes.add(new GraphNode(venue));
+		if (venue != null && findNode(venue.getVenueId()) == null) {
+			nodes.add(new GraphNode(venue));
+		}
 	}
 	
 	
 	// Finds a graph node using the venue ID
 	public GraphNode findNode(String venueId) {
+		if (venueId == null) return null;
 		
 		for(GraphNode node : nodes) {
-			
-			if(node.getVenue().getVenueId().equals(venueId)) {
+			if(node.getVenue().getVenueId().equalsIgnoreCase(venueId)) {
 				return node;
 			}
 		}
@@ -49,7 +50,7 @@ public class Graph {
 		GraphNode node1 = findNode(venueId1);
 		GraphNode node2 = findNode(venueId2);
 		
-		if (node1 != null && node2 != null) {
+		if (node1 != null && node2 != null && node1 != node2) {
 			node1.addAdjacentNode(node2);
             node2.addAdjacentNode(node1);
 		}

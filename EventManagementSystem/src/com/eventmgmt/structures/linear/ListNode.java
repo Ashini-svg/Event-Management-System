@@ -2,12 +2,12 @@ package com.eventmgmt.structures.linear;
 
 import com.eventmgmt.model.Attendee;
 
-public class Node {
+public class ListNode {
 
     private Attendee attendee;
-    private Node next;
+    private ListNode next;
 
-    public Node(Attendee attendee) {
+    public ListNode(Attendee attendee) {
         this.attendee = attendee;
         this.next = null;
     }
@@ -20,11 +20,11 @@ public class Node {
         this.attendee = attendee;
     }
 
-    public Node getNext() {
+    public ListNode getNext() {
         return next;
     }
 
-    public void setNext(Node next) {
+    public void setNext(ListNode next) {
         this.next = next;
     }
 }
