@@ -1,8 +1,0 @@
-/**
- * 
- */
-/**
- * 
- */
-module event.management.system {
-}
