@@ -48,25 +48,29 @@ public class Attendee implements Comparable<Attendee> {
 	// Allows sorting/inserting in the AVL Tree
 	@Override
 	public int compareTo(Attendee other) {
-		return this.attendeeId.compareTo(other.attendeeId);
+		if (this.attendeeId == null || other == null || other.attendeeId == null) {
+			return 0;
+		}
+		return this.attendeeId.compareToIgnoreCase(other.attendeeId);
 	}
 	
 	// Used by the Set ADT to catch duplicate registrations
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) {
-			return true;
-		}
-		if (o == null || getClass() != o.getClass()) {
-			return false;
-		}
+		if (this == o) return true;
+		
+		if (o == null || getClass() != o.getClass()) return false;
+		
 		Attendee attendee = (Attendee) o;
-		return Objects.equals(email, attendee.email);
+		if (this.email != null && attendee.email != null) {
+			return this.email.equalsIgnoreCase(attendee.email);
+		}
+		return Objects.equals(this.attendeeId, attendee.attendeeId);
 	}
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(email);
+		return Objects.hash(email != null ? email.toLowerCase() : attendeeId);
 	}
 	
 	// Overriding toString() for clear outputs
