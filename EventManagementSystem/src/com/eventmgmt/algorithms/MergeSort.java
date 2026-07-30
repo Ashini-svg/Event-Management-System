@@ -1,5 +1,5 @@
 package com.eventmgmt.algorithms;
 
-public class SortAlgorithms {
+public class MergeSort {
 
 }
