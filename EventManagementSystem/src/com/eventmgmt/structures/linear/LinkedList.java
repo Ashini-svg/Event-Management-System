@@ -4,8 +4,9 @@ import com.eventmgmt.model.Attendee;
 
 public class LinkedList {
 
-    private ListNode head;
+    private Node head;
 
+    // Constructor
     public LinkedList() {
         head = null;
     }
@@ -13,14 +14,14 @@ public class LinkedList {
     // Add Attendee
     public void addAttendee(Attendee attendee) {
 
-        ListNode newNode = new ListNode(attendee);
+        Node newNode = new Node(attendee);
 
         if (head == null) {
             head = newNode;
             return;
         }
 
-        ListNode current = head;
+        Node current = head;
 
         while (current.getNext() != null) {
             current = current.getNext();
@@ -37,7 +38,7 @@ public class LinkedList {
             return;
         }
 
-        ListNode current = head;
+        Node current = head;
 
         while (current != null) {
 
@@ -48,10 +49,10 @@ public class LinkedList {
         }
     }
 
-    // Search by Attendee ID
+    // Search Attendee
     public Attendee searchAttendee(String attendeeId) {
 
-        ListNode current = head;
+        Node current = head;
 
         while (current != null) {
 
@@ -65,39 +66,10 @@ public class LinkedList {
         return null;
     }
 
-    // Delete Attendee
-    public boolean deleteAttendee(String attendeeId) {
-
-        if (head == null) {
-            return false;
-        }
-
-        if (head.getAttendee().getAttendeeId().equalsIgnoreCase(attendeeId)) {
-            head = head.getNext();
-            return true;
-        }
-
-        ListNode current = head;
-
-        while (current.getNext() != null) {
-
-            if (current.getNext().getAttendee().getAttendeeId().equalsIgnoreCase(attendeeId)) {
-
-                current.setNext(current.getNext().getNext());
-
-                return true;
-            }
-
-            current = current.getNext();
-        }
-
-        return false;
-    }
-
     // Update Attendee
     public boolean updateAttendee(String attendeeId, String newName, String newEmail) {
 
-        ListNode current = head;
+        Node current = head;
 
         while (current != null) {
 
@@ -115,4 +87,36 @@ public class LinkedList {
         return false;
     }
 
+    // Delete Attendee
+    public boolean deleteAttendee(String attendeeId) {
+
+        if (head == null) {
+            return false;
+        }
+
+        if (head.getAttendee().getAttendeeId().equalsIgnoreCase(attendeeId)) {
+            head = head.getNext();
+            return true;
+        }
+
+        Node current = head;
+
+        while (current.getNext() != null) {
+
+            if (current.getNext().getAttendee().getAttendeeId().equalsIgnoreCase(attendeeId)) {
+
+                current.setNext(current.getNext().getNext());
+                return true;
+            }
+
+            current = current.getNext();
+        }
+
+        return false;
+    }
+
+    // Get Head Node
+    public Node getHead() {
+        return head;
+    }
 }
