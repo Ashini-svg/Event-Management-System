@@ -1,52 +1,48 @@
 package com.eventmgmt.algorithms;
 
-import com.eventmgmt.model.Booking;
-import com.eventmgmt.model.Event;
+import java.util.List;
 
 public class InsertionSort {
-	// Sorts an array of booking objects chronologically by booking time-stamp
-	public static void sortByDate(Booking[] bookings) {
-		if (bookings == null || bookings.length <= 1) {
+	
+	// Sorts a List in-place
+	public static <T extends Comparable<T>> void sort(List<T> list) {
+		// If the list is empty or has only one element, it is already sorted
+		if (list == null || list.size() <= 1) {
 			return;
 		}
-		int n = bookings.length;
-		
-		for (int i = 1; i < n; i++) {
-			Booking key = bookings[i];
+		// Loop through the list starting from the second element
+		for (int i = 1; i < list.size(); i++) {
+			T key = list.get(i);  // current element to be placed in the sorted portion
+			int j = i - 1;  // index of the last element in the sorted portion
 			
-			// Skip null entries if array is not fully packed
-			if (key == null) continue;
-			
-			int j = i -1;
-			
-			// Shift elements of bookings that are greater than key.getBookingDateTime()
-			while (j >= 0 && bookings[j] != null && bookings[j].getBookingDate().isAfter(key.getBookingDate())) {
-				bookings[j + 1] = bookings[j];
-				j = j - 1;
+			// Shift elements that are greater than key to one position ahead
+			while (j >= 0 && list.get(j).compareTo(key) > 0) {
+				list.set(j + 1, list.get(j));  // shift element right
+				j--;  // move back to compare previous element
 			}
-			bookings[j + 1] = key;
+			
+			// insert the key into its correct sorted position
+			list.set(j + 1, key);
 		}
 	}
 	
-	// Helper method to sort an array of Event objects chronologically by event date and time
-	public static void sortEventsByDate(Event[] events) {
-		if (events == null || events.length <= 1) {
+	// Overloaded method to sort standard Java arrays in-place
+	public static <T extends Comparable<T>> void sort(T[] array) {
+		// If array is empty or has one element, no sorting needed
+		if (array == null || array.length <= 1) {
 			return;
 		}
-		int n = events.length;
 		
-		for (int i = 1; i < n; i++) {
-			Event key = events[i];
+		// Start from second element
+		for (int i = 1; i < array.length; i++) {
+			T key = array[i];  // current element to insert
+			int j = i - 1;  // end of sorted sub-array
 			
-			if (key == null) continue;
-			
-			int j = i - 1;
-			
-			while (j >= 0 && events[j] != null && events[j].getEventDateTime().isAfter(key.getEventDateTime())) {
-				events[j + 1] = events[j];
-				j = j - 1;
+			while (j >= 0 && array[j].compareTo(key) > 0) {
+				array[j + 1] = array[j];
+				j--;
 			}
-			events[j + 1] = key;
+			array[j + 1] = key;  // Place key in correct spot
 		}
 	}
 }

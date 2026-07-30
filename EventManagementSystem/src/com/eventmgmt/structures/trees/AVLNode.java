@@ -1,30 +1,28 @@
 package com.eventmgmt.structures.trees;
 
-import com.eventmgmt.model.Attendee;
-
-public class AVLNode {
-	private Attendee attendee;
-	private AVLNode left;
-	private AVLNode right;
+public class AVLNode<T extends Comparable<T>> {
+	private T data;
+	private AVLNode<T> left;
+	private AVLNode<T> right;
 	private int height;
 	
-	public AVLNode(Attendee attendee) {
-		this.attendee = attendee;
+	public AVLNode(T data) {
+		this. data = data;
 		this.left = null;
 		this.right = null;
 		this.height = 1;  // New nodes start with height 1
 	}
 	
 	// Getters
-	public Attendee getAttendee() {
-		return attendee;
+	public T getData() {
+		return data;
 	}
 	
-	public AVLNode getLeft() {
+	public AVLNode<T> getLeft() {
 		return left;
 	}
 	
-	public AVLNode getRight() {
+	public AVLNode<T> getRight() {
 		return right;
 	}
 	
@@ -33,15 +31,15 @@ public class AVLNode {
 	}
 	
 	// Setters
-	public void setAttendee(Attendee attendee) {
-		this.attendee = attendee;
+	public void setData(T data) {
+		this.data = data;
 	}
 	
-	public void setLeft(AVLNode left) {
+	public void setLeft(AVLNode<T> left) {
 		this.left = left;
 	}
 	
-	public void setRight(AVLNode right) {
+	public void setRight(AVLNode<T> right) {
 		this.right = right;
 	}
 	

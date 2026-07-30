@@ -1,27 +1,27 @@
 package com.eventmgmt.structures.trees;
 
-import com.eventmgmt.model.Attendee;
-
-public class AVLTree {
-	private AVLNode root;
+public class AVLTree<T extends Comparable<T>> {
+	private AVLNode<T> root;
+	private int size;
 	
 	public AVLTree() {
 		this.root = null;
+		this.size = 0;
 	}
 	
 	// Helper Utility Methods
 	// Gets node height cleanly (returns 0 for null nodes)
-	private int getHeight(AVLNode node) {
+	private int getHeight(AVLNode<T> node) {
 		return (node == null) ? 0 : node.getHeight();
 	}
 	
 	// Returns node balance factor
-	private int getBalance(AVLNode node) {
+	private int getBalance(AVLNode<T> node) {
 		return (node == null) ? 0 : getHeight(node.getLeft()) - getHeight(node.getRight());
 	}
 	
 	// Updates height of a node based on its children
-	private void updateHeight(AVLNode node) {
+	private void updateHeight(AVLNode<T> node) {
 		if (node != null) {
 			node.setHeight(1 + Math.max(getHeight(node.getLeft()), getHeight(node.getRight())));
 		}
@@ -29,13 +29,7 @@ public class AVLTree {
 	
 	// Returns the total number of elements in the tree
 	public int getSize() {
-		return getSizeRecursive(this.root);
-	}
-	
-	private int getSizeRecursive(AVLNode node) {
-		if (node == null) return 0;
-		
-		return 1 + getSizeRecursive(node.getLeft()) + getSizeRecursive(node.getRight());
+		return this.size;
 	}
 	
 	// Returns the height of the root (overall tree height)
@@ -50,9 +44,9 @@ public class AVLTree {
 	
 	// AVL Rotations
 	// Right Rotati0n (LL Case)
-	private AVLNode rotateRight(AVLNode y) {
-		AVLNode x = y.getLeft();
-		AVLNode T2 = x.getRight();
+	private AVLNode<T> rotateRight(AVLNode<T> y) {
+		AVLNode<T> x = y.getLeft();
+		AVLNode<T> T2 = x.getRight();
 		
 		// Perform rotation
 		x.setRight(y);
@@ -66,9 +60,9 @@ public class AVLTree {
 	}
 	
 	// Left Rotation (RR Case)
-	private AVLNode rotateLeft(AVLNode x) {
-		AVLNode y = x.getRight();
-		AVLNode T2 = y.getLeft();
+	private AVLNode<T> rotateLeft(AVLNode<T> x) {
+		AVLNode<T> y = x.getRight();
+		AVLNode<T> T2 = y.getLeft();
 		
 		// Perform rotation
 		y.setLeft(x);
@@ -83,51 +77,49 @@ public class AVLTree {
 	
 	// Core Data Structure Functions
 	// Insert Method
-	public void insert(Attendee attendee) {
-		if (attendee == null || attendee.getAttendeeId() == null) return;
-		this.root = insertRecursive(this.root, attendee);
+	public void insert(T data) {
+		if (data == null) return;
+		this.root = insertRecursive(this.root, data);
 	}
 	
-	private AVLNode insertRecursive(AVLNode node, Attendee attendee) {
+	private AVLNode<T> insertRecursive(AVLNode<T> node, T data) {
 		// Standard BST Insertion
 		if (node == null) {
-			return new AVLNode(attendee);
+			size++;
+			return new AVLNode<>(data);
 		}
-		int comparison = attendee.getAttendeeId().compareToIgnoreCase(node.getAttendee().getAttendeeId());
+		int comparison = data.compareTo(node.getData());
 		
 		if (comparison < 0) {
-			node.setLeft(insertRecursive(node.getLeft(), attendee));
+			node.setLeft(insertRecursive(node.getLeft(), data));
 			
 		} else if (comparison > 0) {
-			node.setRight(insertRecursive(node.getRight(), attendee));
+			node.setRight(insertRecursive(node.getRight(), data));
 			
 		} else {
-			// Duplicate attendee IDs not allowed
-			return node;
+			return node;  // Duplicate attendee IDs not allowed
 		}
 		updateHeight(node);
-		
-		// Get balance factor to check for imbalance
-		int balance = getBalance(node);
+		int balance = getBalance(node);  // Get balance factor to check for imbalance
 		
 		// Left Left (LL) Case
-        if (balance > 1 && attendee.getAttendeeId().compareToIgnoreCase(node.getLeft().getAttendee().getAttendeeId()) < 0) {
+        if (balance > 1 && data.compareTo(node.getLeft().getData()) < 0) {
             return rotateRight(node);
         }
 
         // Right Right (RR) Case
-        if (balance < -1 && attendee.getAttendeeId().compareToIgnoreCase(node.getRight().getAttendee().getAttendeeId()) > 0) {
+        if (balance < -1 && data.compareTo(node.getRight().getData()) > 0) {
             return rotateLeft(node);
         }
 
         // Left Right (LR) Case
-        if (balance > 1 && attendee.getAttendeeId().compareToIgnoreCase(node.getLeft().getAttendee().getAttendeeId()) > 0) {
+        if (balance > 1 && data.compareTo(node.getLeft().getData()) > 0) {
             node.setLeft(rotateLeft(node.getLeft()));
             return rotateRight(node);
         }
 
         // Right Left (RL) Case
-        if (balance < -1 && attendee.getAttendeeId().compareToIgnoreCase(node.getRight().getAttendee().getAttendeeId()) < 0) {
+        if (balance < -1 && data.compareTo(node.getRight().getData()) < 0) {
             node.setRight(rotateRight(node.getRight()));
             return rotateLeft(node);
         }
@@ -135,50 +127,49 @@ public class AVLTree {
 	}
 	
 	// Delete Method
-	public void delete(String attendeeId) {
-		if (attendeeId == null) return;
+	public void delete(T data) {
+		if (data == null) return;
 		
-        this.root = deleteRecursive(this.root, attendeeId);
+        this.root = deleteRecursive(this.root, data);
     }
 
-    private AVLNode deleteRecursive(AVLNode root, String attendeeId) {
+    private AVLNode<T> deleteRecursive(AVLNode<T> root, T data) {
         if (root == null) return null;
 
-        int comparison = attendeeId.compareToIgnoreCase(root.getAttendee().getAttendeeId());
+        int comparison = data.compareTo(root.getData());
 
         if (comparison < 0) {
-            root.setLeft(deleteRecursive(root.getLeft(), attendeeId));
+            root.setLeft(deleteRecursive(root.getLeft(), data));
+            
         } else if (comparison > 0) {
-            root.setRight(deleteRecursive(root.getRight(), attendeeId));
+            root.setRight(deleteRecursive(root.getRight(), data));
+            
         } else {
+        	size--;  // Target node found
             // Node to be deleted found!
             // Node with only one child or no child
             if ((root.getLeft() == null) || (root.getRight() == null)) {
-                AVLNode temp = (root.getLeft() != null) ? root.getLeft() : root.getRight();
+                AVLNode<T> temp = (root.getLeft() != null) ? root.getLeft() : root.getRight();
 
                 if (temp == null) {
-                    // No child case
-                    temp = root;
-                    root = null;
+                    root = null;  // No child case
+                    
                 } else {
-                    // One child case
-                    root = temp;
+                    root = temp;  // One child case
                 }
             } else {
                 // Node with two children: Get the in-order successor (smallest in right subtree)
-                AVLNode temp = getMinValueNode(root.getRight());
-                root.setAttendee(temp.getAttendee());
-                root.setRight(deleteRecursive(root.getRight(), temp.getAttendee().getAttendeeId()));
+                AVLNode<T> temp = getMinValueNode(root.getRight());
+                root.setData(temp.getData());
+                size++;  // Compensate for double decrement in recursive call
+                root.setRight(deleteRecursive(root.getRight(), temp.getData()));
             }
         }
 
         if (root == null) return null;
 
-        // Update height
-        updateHeight(root);
-
-        // Check balance factor
-        int balance = getBalance(root);
+        updateHeight(root);  // Update height
+        int balance = getBalance(root);  // Check balance factor
 
         // Balance rotations if required after deletion
         if (balance > 1 && getBalance(root.getLeft()) >= 0) {
@@ -202,8 +193,8 @@ public class AVLTree {
         return root;
     }
     
-    private AVLNode getMinValueNode(AVLNode node) {
-        AVLNode current = node;
+    private AVLNode<T> getMinValueNode(AVLNode<T> node) {
+        AVLNode<T> current = node;
         while (current.getLeft() != null) {
             current = current.getLeft();
         }
@@ -211,36 +202,40 @@ public class AVLTree {
     }
 	
     // Search Method
-    public Attendee search(String attendeeId) {
-    	if (attendeeId == null) return null;
+    public T search(T key) {
+    	if (key == null) return null;
     	
-        AVLNode node = searchRecursive(this.root, attendeeId);
-        return (node != null) ? node.getAttendee() : null;
+        AVLNode<T> node = searchRecursive(this.root, key);
+        return (node != null) ? node.getData() : null;
     }
 
-    private AVLNode searchRecursive(AVLNode root, String attendeeId) {
-        if (root == null || root.getAttendee().getAttendeeId().equalsIgnoreCase(attendeeId)) {
+    private AVLNode<T> searchRecursive(AVLNode<T> root, T key) {
+        if (root == null) return root;
+        
+        int comparison = key.compareTo(root.getData());
+
+        if (comparison == 0) {
             return root;
+            
+        } else if (comparison < 0) {
+        	return searchRecursive(root.getLeft(), key);
+        	
+        } else {
+        	return searchRecursive(root.getRight(), key);
         }
-
-        if (attendeeId.compareToIgnoreCase(root.getAttendee().getAttendeeId()) < 0) {
-            return searchRecursive(root.getLeft(), attendeeId);
-        }
-
-        return searchRecursive(root.getRight(), attendeeId);
     }
     
     // Traversal Methods
     // In-order Traversal
     public void inorderTraversal() {
-        System.out.println("\n--- Inorder Traversal (Attendee List) ---");
+        System.out.println("\n--- Inorder Traversal ---");
         inorderRecursive(this.root);
     }
 
-    private void inorderRecursive(AVLNode node) {
+    private void inorderRecursive(AVLNode<T> node) {
         if (node != null) {
             inorderRecursive(node.getLeft());
-            System.out.println(node.getAttendee());
+            System.out.println(node.getData());
             System.out.println("---------------------------------");
             inorderRecursive(node.getRight());
         }
@@ -252,9 +247,9 @@ public class AVLTree {
         preorderRecursive(this.root);
     }
 
-    private void preorderRecursive(AVLNode node) {
+    private void preorderRecursive(AVLNode<T> node) {
         if (node != null) {
-            System.out.println(node.getAttendee());
+            System.out.println(node.getData());
             preorderRecursive(node.getLeft());
             preorderRecursive(node.getRight());
         }
@@ -266,11 +261,11 @@ public class AVLTree {
         postorderRecursive(this.root);
     }
 
-    private void postorderRecursive(AVLNode node) {
+    private void postorderRecursive(AVLNode<T> node) {
         if (node != null) {
             postorderRecursive(node.getLeft());
             postorderRecursive(node.getRight());
-            System.out.println(node.getAttendee());
+            System.out.println(node.getData());
         }
     }
 }
