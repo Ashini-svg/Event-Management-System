@@ -4,7 +4,7 @@ import com.eventmgmt.model.Attendee;
 
 public class LinkedList {
 
-    private Node head;
+    private ListNode head;
 
     // Constructor
     public LinkedList() {
@@ -14,14 +14,14 @@ public class LinkedList {
     // Add Attendee
     public void addAttendee(Attendee attendee) {
 
-        Node newNode = new Node(attendee);
+        ListNode newNode = new ListNode(attendee);
 
         if (head == null) {
             head = newNode;
             return;
         }
 
-        Node current = head;
+        ListNode current = head;
 
         while (current.getNext() != null) {
             current = current.getNext();
@@ -38,7 +38,7 @@ public class LinkedList {
             return;
         }
 
-        Node current = head;
+        ListNode current = head;
 
         while (current != null) {
 
@@ -52,7 +52,7 @@ public class LinkedList {
     // Search Attendee
     public Attendee searchAttendee(String attendeeId) {
 
-        Node current = head;
+        ListNode current = head;
 
         while (current != null) {
 
@@ -69,7 +69,7 @@ public class LinkedList {
     // Update Attendee
     public boolean updateAttendee(String attendeeId, String newName, String newEmail) {
 
-        Node current = head;
+        ListNode current = head;
 
         while (current != null) {
 
@@ -99,7 +99,7 @@ public class LinkedList {
             return true;
         }
 
-        Node current = head;
+        ListNode current = head;
 
         while (current.getNext() != null) {
 
@@ -116,7 +116,7 @@ public class LinkedList {
     }
 
     // Get Head Node
-    public Node getHead() {
+    public ListNode getHead() {
         return head;
     }
 }

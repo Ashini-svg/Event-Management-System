@@ -1,4 +1,4 @@
-package com.eventmgmt.manager;
+package com.eventmgmt.structures.linear;
 
 public class CategoryArray {
 	
