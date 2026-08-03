@@ -4,11 +4,11 @@ import com.eventmgmt.model.Attendee;
 
 public class WaitingListManager {
 
-    private Queue waitingQueue;
+    private Queue<Attendee> waitingQueue;
 
     // Constructor
     public WaitingListManager() {
-        waitingQueue = new Queue();
+        waitingQueue = new Queue<>();
     }
 
     // Add Attendee
