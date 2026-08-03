@@ -1,25 +1,25 @@
 package com.eventmgmt.structures.linear;
 
-import com.eventmgmt.model.Attendee;
 
-public class Queue {
+public class Queue<T> {
 
     // Node class
-    private static class Node {
+    private static class Node<T> {
 
-        Attendee data;
-        Node next;
+        T data;
+        Node<T> next;
 
-        Node(Attendee data) {
+        Node(T data) {
             this.data = data;
             this.next = null;
         }
     }
 
-    private Node front;
-    private Node rear;
+    private Node<T> front;
+    private Node<T> rear;
     private int size;
 
+    
     // Constructor
     public Queue() {
         front = null;
@@ -27,10 +27,11 @@ public class Queue {
         size = 0;
     }
 
+    
     // Enqueue
-    public void enqueue(Attendee attendee) {
+    public void enqueue(T item) {
 
-        Node newNode = new Node(attendee);
+        Node<T> newNode = new Node<>(item);
 
         if (rear == null) {
             front = rear = newNode;
@@ -42,14 +43,15 @@ public class Queue {
         size++;
     }
 
+    
     // Dequeue
-    public Attendee dequeue() {
+    public T dequeue() {
 
         if (isEmpty()) {
             return null;
         }
 
-        Attendee attendee = front.data;
+        T item = front.data;
         front = front.next;
 
         if (front == null) {
@@ -58,11 +60,12 @@ public class Queue {
 
         size--;
 
-        return attendee;
+        return item;
     }
 
+    
     // Peek
-    public Attendee peek() {
+    public T peek() {
 
         if (isEmpty()) {
             return null;
@@ -71,16 +74,19 @@ public class Queue {
         return front.data;
     }
 
+    
     // Empty
     public boolean isEmpty() {
         return front == null;
     }
 
+    
     // Size
     public int getSize() {
         return size;
     }
 
+    
     // Display
     public void display() {
 
@@ -89,7 +95,7 @@ public class Queue {
             return;
         }
 
-        Node current = front;
+        Node<T> current = front;
 
         while (current != null) {
             System.out.println(current.data);
