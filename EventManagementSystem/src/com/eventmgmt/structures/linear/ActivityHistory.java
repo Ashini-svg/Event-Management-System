@@ -2,11 +2,11 @@ package com.eventmgmt.structures.linear;
 
 public class ActivityHistory {
 
-    private Stack historyStack;
+    private Stack<String> historyStack;
 
     // Constructor
     public ActivityHistory() {
-        historyStack = new Stack();
+        historyStack = new Stack<>();
     }
 
     // Log Activity

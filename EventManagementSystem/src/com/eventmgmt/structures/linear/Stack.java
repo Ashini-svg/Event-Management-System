@@ -1,52 +1,56 @@
 package com.eventmgmt.structures.linear;
 
-public class Stack {
+public class Stack<T> {
 
-    private static class Node {
+    private static class Node<T> {
 
-        String data;
-        Node next;
+        T data;
+        Node<T> next;
 
-        public Node(String data) {
+        public Node(T data) {
             this.data = data;
             this.next = null;
         }
     }
 
-    private Node top;
+    private Node<T> top;
     private int size;
 
+    
     // Constructor
     public Stack() {
         top = null;
         size = 0;
     }
 
+    
     // Push
-    public void push(String item) {
+    public void push(T item) {
 
-        Node newNode = new Node(item);
+        Node<T> newNode = new Node<>(item);
         newNode.next = top;
         top = newNode;
         size++;
     }
 
+    
     // Pop
-    public String pop() {
+    public T pop() {
 
         if (isEmpty()) {
             return null;
         }
 
-        String item = top.data;
+        T item = top.data;
         top = top.next;
         size--;
 
         return item;
     }
 
+    
     // Peek
-    public String peek() {
+    public T peek() {
 
         if (isEmpty()) {
             return null;
@@ -55,16 +59,19 @@ public class Stack {
         return top.data;
     }
 
+   
     // Check Empty
     public boolean isEmpty() {
         return top == null;
     }
 
+   
     // Get Size
     public int getSize() {
         return size;
     }
 
+    
     // Display Stack
     public void display() {
 
@@ -73,7 +80,7 @@ public class Stack {
             return;
         }
 
-        Node current = top;
+        Node<T> current = top;
 
         while (current != null) {
             System.out.println(current.data);
