@@ -45,7 +45,7 @@ public class BST {
 
         while (current != null) {
 
-        	int comparison = eventId.compareTo(current.getEvent().getEventId());
+        	int comparison = eventId.compareToIgnoreCase(current.getEvent().getEventId());
 
             if (comparison == 0) {
             	return current.getEvent();
@@ -72,7 +72,7 @@ public class BST {
             return null;
         }
 
-        int comparison = eventId.compareTo(current.getEvent().getEventId());
+        int comparison = eventId.compareToIgnoreCase(current.getEvent().getEventId());
 
         if (comparison < 0) {
         	current.setLeft(deleteRecursive(current.getLeft(), eventId));
