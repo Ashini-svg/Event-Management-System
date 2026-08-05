@@ -14,12 +14,12 @@ public class Venue implements Comparable<Venue> {
     public Venue() {}
 
     // Parameterized Constructor
-    public Venue(String venueId, String venueName, String location, int capacity) {
+    public Venue(String venueId, String venueName, String location, int capacity, boolean available) {
         this.venueId = venueId;
         this.venueName = venueName;
         this.location = location;
         this.capacity = capacity;
-        this.available = true;
+        this.available = available;
     }
 
     // Getters
