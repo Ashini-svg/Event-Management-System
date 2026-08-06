@@ -10,18 +10,19 @@ public class DBConnection {
 	private static final String USER = "root";  // Update your MySQL username
 	private static final String PASSWORD = "root";  //Replace with your actual MySQL root password
 	
-	private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-	
-	static {
+	public static Connection getConnection() {
+		Connection conn = null;
+		
 		try {
-			Class.forName(DRIVER);
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			conn = DriverManager.getConnection(URL, USER, PASSWORD);
+			
 		} catch (ClassNotFoundException e) {
-			System.out.println("MySQL Driver not found! Ensure JDBC JAR is added to build path.");
-			e.printStackTrace();
+			System.err.println("JDBC Driver not found: " + e.getMessage());
+			
+		} catch (SQLException e) {
+			System.err.println("Database connection failed " + e.getMessage());
 		}
-	}
-	
-	public static Connection getConnection()throws SQLException {
-		return DriverManager.getConnection(URL, USER, PASSWORD);
+		return conn;
 	}
 }
