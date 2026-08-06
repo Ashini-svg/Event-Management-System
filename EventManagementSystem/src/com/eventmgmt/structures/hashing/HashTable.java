@@ -3,24 +3,9 @@ package com.eventmgmt.structures.hashing;
 import com.eventmgmt.model.Attendee;
 
 public class HashTable {
-    
-    // Hash Node for Separate Chaining collision handling
-    private static class HashNode {
-        String key; // e.g., attendeeId or email
-        Attendee value;
-        HashNode next;
-
-        public HashNode(String key, Attendee value) {
-            this.key = key;
-            this.value = value;
-            this.next = null;
-        }
-    }
-
     private HashNode[] buckets;
     private int capacity;
     private int size;
-    private static final double LOAD_FACTOR = 0.75;
 
     public HashTable(int capacity) {
         this.capacity = capacity;
@@ -29,28 +14,25 @@ public class HashTable {
     }
 
     public HashTable() {
-        this(10); // Default capacity
+        this(10);
     }
 
-    // Custom Hash Function
+    // Custom Hash Function: Calculates array index using absolute hash code mod capacity
     private int getBucketIndex(String key) {
-        return Math.abs(key.toLowerCase().hashCode()) % capacity;
+        int hashCode = key.hashCode();
+        return Math.abs(hashCode) % capacity;
     }
 
-    // Insert or Update Key-Value pair
+    // Insertion or update operation
     public void put(String key, Attendee value) {
         if (key == null || value == null) {
             throw new IllegalArgumentException("Key or Value cannot be null");
-        }
-        
-        if ((double) size / capacity >= LOAD_FACTOR) {
-        	resize();
         }
 
         int bucketIndex = getBucketIndex(key);
         HashNode head = buckets[bucketIndex];
 
-        // Check if key already exists (Update)
+        // If key already exists, update the value
         while (head != null) {
             if (head.key.equalsIgnoreCase(key)) {
                 head.value = value;
@@ -59,32 +41,15 @@ public class HashTable {
             head = head.next;
         }
 
-        // Insert new node at the head (Collision Resolution via Chaining)
+        // Insert new node at the head of the chain
         size++;
         head = buckets[bucketIndex];
         HashNode newNode = new HashNode(key, value);
         newNode.next = head;
         buckets[bucketIndex] = newNode;
     }
-    
-    private void resize() {
-    	int oldCapacity = capacity;
-    	HashNode[] oldBuckets = buckets;
-    	
-    	capacity = oldCapacity * 2;
-    	buckets = new HashNode[capacity];
-    	size = 0;
-    	
-    	for (int i = 0; i < oldCapacity; i++) {
-    		HashNode head = oldBuckets[i];
-    		while (head != null) {
-    			put(head.key, head.value);
-    			head = head.next;
-    		}
-    	}
-    }
 
-    // Retrieve element by Key
+    // Retrieval operation
     public Attendee get(String key) {
         if (key == null) return null;
 
@@ -98,13 +63,13 @@ public class HashTable {
             head = head.next;
         }
 
-        return null; // Key not found
+        return null;
     }
-   
-    // Remove element by Key
+
+    // Deletion operation
     public Attendee remove(String key) {
-    	if (key == null) return null;
-    	
+        if (key == null) return null;
+
         int bucketIndex = getBucketIndex(key);
         HashNode head = buckets[bucketIndex];
         HashNode prev = null;

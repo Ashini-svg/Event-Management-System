@@ -1,70 +1,39 @@
 package com.eventmgmt.structures.hashing;
 
-public class SetADT<T> {
-    
-    private static class Node<T> {
-        T data;
-        Node<T> next;
+import com.eventmgmt.model.Attendee;
 
-        public Node(T data) {
-            this.data = data;
-            this.next = null;
-        }
-    }
-
-    private Node<T>[] buckets;
-    private int capacity;
-    private int size;
-
-    @SuppressWarnings("unchecked")
-    public SetADT(int capacity) {
-        this.capacity = capacity;
-        this.buckets = new Node[capacity];
-        this.size = 0;
-    }
+public class SetADT {
+    private HashTable table;
 
     public SetADT() {
-        this(10);
+        this.table = new HashTable(20);
     }
 
-    private int getIndex(T element) {
-        return Math.abs(element.hashCode()) % capacity;
-    }
-
-    // Add element while preventing duplicates
-    public boolean add(T element) {
-        if (element == null) return false;
-
-        if (contains(element)) {
-            System.out.println("Duplicate entry detected! Element '" + element + "' was not added.");
-            return false; // Duplicate prevented
+    // Adds unique elements only
+    public boolean add(Attendee attendee) {
+        if (attendee == null || attendee.getAttendeeId() == null) {
+            return false;
         }
 
-        int index = getIndex(element);
-        Node<T> newNode = new Node<>(element);
-        newNode.next = buckets[index];
-        buckets[index] = newNode;
-        size++;
+        // Duplicate prevention check
+        if (contains(attendee.getAttendeeId())) {
+            System.out.println("Duplicate registration prevented for ID: " + attendee.getAttendeeId());
+            return false;
+        }
+
+        table.put(attendee.getAttendeeId(), attendee);
         return true;
     }
 
-    // Check if element exists in the Set
-    public boolean contains(T element) {
-        if (element == null) return false;
+    public boolean contains(String key) {
+        return table.get(key) != null;
+    }
 
-        int index = getIndex(element);
-        Node<T> current = buckets[index];
-
-        while (current != null) {
-            if (current.data.equals(element)) {
-                return true;
-            }
-            current = current.next;
-        }
-        return false;
+    public boolean remove(String key) {
+        return table.remove(key) != null;
     }
 
     public int size() {
-        return size;
+        return table.getSize();
     }
 }
