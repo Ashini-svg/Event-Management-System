@@ -17,10 +17,9 @@ public class HashTable {
         this(10);
     }
 
-    // Custom Hash Function: Calculates array index using absolute hash code mod capacity
+    // Bitwise and masks sign bit to prevent negative indices on Integer.MIN_VALUE
     private int getBucketIndex(String key) {
-        int hashCode = key.hashCode();
-        return Math.abs(hashCode) % capacity;
+        return (key.hashCode() & 0x7FFFFFFF) % capacity;
     }
 
     // Insertion or update operation

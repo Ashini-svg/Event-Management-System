@@ -12,16 +12,17 @@ public class DBConnection {
 	
 	private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
 	
+	// Load the JDBC driver once when the class is first used
 	static {
 		try {
 			Class.forName(DRIVER);
 		} catch (ClassNotFoundException e) {
-			System.out.println("MySQL Driver not found! Ensure JDBC JAR is added to build path.");
+			System.out.println("MySQL Driver not found! Ensure the JDBC JAR is added to the build path.");
 			e.printStackTrace();
 		}
 	}
 	
-	public static Connection getConnection()throws SQLException {
+	public static Connection getConnection() throws SQLException {
 		return DriverManager.getConnection(URL, USER, PASSWORD);
 	}
 }

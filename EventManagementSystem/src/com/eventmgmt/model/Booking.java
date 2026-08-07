@@ -33,7 +33,7 @@ public class Booking {
 		return attendeeId;
 	}
 	
-	public LocalDateTime getBookingDate() {
+	public LocalDateTime getBookingDateTime() {
 		return bookingDateTime;
 	}
 	

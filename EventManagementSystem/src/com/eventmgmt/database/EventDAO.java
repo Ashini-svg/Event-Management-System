@@ -52,7 +52,7 @@ public class EventDAO {
 			while (rs.next()) {
 				String eventId = rs.getString("event_id");
 				String title = rs.getString("title");
-				String category = rs.getString("venue_id");
+				String category = rs.getString("category");
 				String venueId = rs.getString("venue_id");
 				LocalDateTime dateTime = rs.getTimestamp("event_datetime").toLocalDateTime();
 				int capacity = rs.getInt("capacity");

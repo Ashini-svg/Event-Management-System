@@ -145,12 +145,12 @@ public class AVLTree<T extends Comparable<T>> {
             root.setRight(deleteRecursive(root.getRight(), data));
             
         } else {
-        	size--;  // Target node found
             // Node to be deleted found!
             // Node with only one child or no child
             if ((root.getLeft() == null) || (root.getRight() == null)) {
                 AVLNode<T> temp = (root.getLeft() != null) ? root.getLeft() : root.getRight();
-
+                size--;
+                
                 if (temp == null) {
                     root = null;  // No child case
                     
@@ -161,7 +161,6 @@ public class AVLTree<T extends Comparable<T>> {
                 // Node with two children: Get the in-order successor (smallest in right subtree)
                 AVLNode<T> temp = getMinValueNode(root.getRight());
                 root.setData(temp.getData());
-                size++;  // Compensate for double decrement in recursive call
                 root.setRight(deleteRecursive(root.getRight(), temp.getData()));
             }
         }

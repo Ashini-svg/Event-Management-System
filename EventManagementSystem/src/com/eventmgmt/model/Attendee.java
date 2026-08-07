@@ -56,12 +56,12 @@ public class Attendee implements Comparable<Attendee> {
 	
 	// Used by the Set ADT to catch duplicate registrations
 	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
+	public boolean equals(Object obj) {
+		if (this == obj) return true;
 		
-		if (o == null || getClass() != o.getClass()) return false;
+		if (obj == null || getClass() != obj.getClass()) return false;
 		
-		Attendee attendee = (Attendee) o;
+		Attendee attendee = (Attendee) obj;
 		if (this.email != null && attendee.email != null) {
 			return this.email.equalsIgnoreCase(attendee.email);
 		}
