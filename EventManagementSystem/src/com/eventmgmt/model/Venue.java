@@ -80,6 +80,9 @@ public class Venue implements Comparable<Venue> {
     // This is used by sorting algorithms such as Merge Sort.
     @Override
     public int compareTo(Venue other) {
-        return this.venueName.compareTo(other.venueName);
+    	if (this.venueName == null || other == null || other.venueName == null) {
+    		return 0;
+    	}
+    	return this.venueName.compareToIgnoreCase(other.venueName);
     }
 }
