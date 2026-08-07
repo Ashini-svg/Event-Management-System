@@ -552,6 +552,10 @@ public class SubMenuHandler {
 				activityHistory.undoLastActivity();
 				System.out.println("-----------------------------------------------------------------------------");
 			}
+			case 4 -> {
+				System.out.println("-----------------------------------------------------------------------------");
+				back = true;
+			}
 			default -> {
 				System.out.println("-----------------------------------------------------------------------------");
 				System.out.println("Invalid selection. Please try again.");

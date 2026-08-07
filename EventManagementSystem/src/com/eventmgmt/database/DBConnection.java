@@ -8,7 +8,7 @@ public class DBConnection {
 	
 	private static final String URL = "jdbc:mysql://localhost:3306/eventmgmt_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
 	private static final String USER = "root";  // Update your MySQL username
-	private static final String PASSWORD = "root";  //Replace with your actual MySQL root password
+	private static final String PASSWORD = "423040";  //Replace with your actual MySQL root password
 	
 	private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
 	
