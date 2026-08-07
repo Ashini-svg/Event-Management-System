@@ -51,7 +51,7 @@ public class MainApplication {
 		List<Event> events = SubMenuHandler.eventDAO.getAllEvents();
 		for (Event e : events) {
 			SubMenuHandler.eventAVLManager.addEvent(e);
-			SubMenuHandler.eventAVLManager.addEvent(e);
+			SubMenuHandler.eventBSTManager.addEvent(e);
 		}
 		
 		List<Attendee> attendees = SubMenuHandler.attendeeDAO.getAllAttendees();
