@@ -74,6 +74,7 @@ public class WaitingListManager {
         
         if (matched == null) {
         	System.out.println("No one is waiting for event " + eventId +".");
+        	return null;
         }
         
         System.out.println(matched.getAttendee().getName() + " has been registered for event " + eventId + ".");
