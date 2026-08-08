@@ -152,7 +152,7 @@ public class SubMenuHandler {
 			System.out.println("2. Search Event by ID (AVL Search)");
 			System.out.println("3. Search Event by ID (BST Search)");
 			System.out.println("4. Remove Event by ID");
-			System.out.println("5. Display All Events - AVL (In-order Traversal");
+			System.out.println("5. Display All Events - AVL (In-order Traversal)");
 			System.out.println("6. Display All Events - BST (In-order/Pre-order/Post-order)");
 			System.out.println("7. Linear Search Event (by ID or Title)");
 			System.out.println("8. Back to Main Menu");
@@ -451,8 +451,8 @@ public class SubMenuHandler {
 				if (event.isFull()) {
 					System.out.println("Event is full! Adding attendee to Waiting List Queue...");
 					System.out.println("-----------------------------------------------------------------------------");
-					waitingListManager.addToWaitingList(attendee);
-					activityHistory.logActivity("added " + attendeeId + "to waiting list for " + eventId);
+					waitingListManager.addToWaitingList(eventId, attendee);
+					activityHistory.logActivity("added " + attendeeId + " to waiting list for " + eventId);
 					
 				} else {
 					String bookingId = "B-" + System.currentTimeMillis();
@@ -489,7 +489,7 @@ public class SubMenuHandler {
 					System.out.println("-----------------------------------------------------------------------------");
 					break;
 				}
-				Attendee next = waitingListManager.processNextAttendee();
+				Attendee next = waitingListManager.processNextAttendeeForEvent(eventId);
 				if (next != null) {
 					String bookingId = "B-" + System.currentTimeMillis() % 10000;
 					Booking booking = new Booking(bookingId, eventId, next.getAttendeeId(), LocalDateTime.now());
