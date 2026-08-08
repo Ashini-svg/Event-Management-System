@@ -9,12 +9,36 @@ public class QuickSort {
         if (attendees == null || attendees.length <= 1 || low < 0 || high >= attendees.length || low >= high) {
             return;
         }
+        
+        // Move any null entries in low-high range to the end of this partition
+        high = trimNullsToRight(attendees, low, high);
+        if (low >= high) {
+        	return;
+        }
 
         int pivotIndex = partition(attendees, low, high);
 
         // Recursively sort elements before and after partition
         sort(attendees, low, pivotIndex - 1);
         sort(attendees, pivotIndex + 1, high);
+    }
+    
+    private static int trimNullsToRight(Attendee[] attendees, int low, int high) {
+    	while (high >= low && attendees[high] == null) {
+    		high--;
+    	}
+    	for (int i = low; i < high; i++) {
+    		if (attendees[i] == null) {
+    			Attendee temp = attendees[i];
+    			attendees[i] = attendees[i];
+    			attendees[high] = temp;
+    			
+    			while (high >= low && attendees[high] == null) {
+    				high--;
+    			}
+    		}
+    	}
+    	return high;
     }
 
     private static int partition(Attendee[] attendees, int low, int high) {
