@@ -198,7 +198,7 @@ public class SubMenuHandler {
 			}
 			case 3 -> {
 				System.out.println("-----------------------------------------------------------------------------");
-				System.out.print("Enter Event ID to searchL ");
+				System.out.print("Enter Event ID to search: ");
 				Event found = eventBSTManager.searchEvent(scanner.nextLine());
 				System.out.println(found != null ? found : "Event not found.");
 				System.out.println("-----------------------------------------------------------------------------");
@@ -455,7 +455,7 @@ public class SubMenuHandler {
 					activityHistory.logActivity("added " + attendeeId + "to waiting list for " + eventId);
 					
 				} else {
-					String bookingId = "B-" + System.currentTimeMillis() % 10000;
+					String bookingId = "B-" + System.currentTimeMillis();
 					Booking booking = new Booking(bookingId, eventId, attendeeId, LocalDateTime.now());
 					
 					if (bookingDAO.addBooking(booking)) {
@@ -591,8 +591,8 @@ public class SubMenuHandler {
 				System.out.println("Venues sorted via Merge Sort: ");
 				for (Venue v : venues) {
 					System.out.println(" - " + v.getVenueName());
-					System.out.println("-----------------------------------------------------------------------------");
 				}
+				System.out.println("-----------------------------------------------------------------------------");
 			}
 			case 2 -> {
 				List<Attendee> attendeeList = attendeeDAO.getAllAttendees();

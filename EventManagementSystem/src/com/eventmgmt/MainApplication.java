@@ -61,7 +61,10 @@ public class MainApplication {
 			SubMenuHandler.attendeeManager.addAttendee(a);
 		}
 		
-		System.out.println("Sync Complete: Loaded " + venues.size() + " venues, " + events.size() + " events, and " + attendees.size() + " attendees.");
+		List<Booking> bookings = SubMenuHandler.bookingDAO.getAllBookings();
+		
+		System.out.println("Sync Complete: Loaded " + venues.size() + " venues, " + events.size() + " events, " 
+                + attendees.size() + " attendees, and " + (bookings != null ? bookings.size() : 0) + " bookings.");
 	}
 	
 	private static void displayMainMenu() {
