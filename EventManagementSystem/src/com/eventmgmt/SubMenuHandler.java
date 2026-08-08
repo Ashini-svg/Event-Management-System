@@ -119,13 +119,13 @@ public class SubMenuHandler {
 			}
 			case 4 -> {
 				System.out.println("-----------------------------------------------------------------------------");
-				System.out.print("Enter Starting Venue ID for BDS: ");
+				System.out.print("Enter Starting Venue ID for BFS: ");
 				venueGraphManager.performBFS(scanner.nextLine());
 				System.out.println("-----------------------------------------------------------------------------");
 			}
 			case 5 -> {
 				System.out.println("-----------------------------------------------------------------------------");
-				System.out.print("Enter Starting Venue ID for DFS");
+				System.out.print("Enter Starting Venue ID for DFS: ");
 				venueGraphManager.performDFS(scanner.nextLine());
 				System.out.println("-----------------------------------------------------------------------------");
 			}
