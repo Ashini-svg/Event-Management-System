@@ -106,6 +106,20 @@ public class SubMenuHandler {
 				String v1 = scanner.nextLine();
 				System.out.print("Enter Second Venue ID: ");
 				String v2 = scanner.nextLine();
+				
+				if (venueGraphManager.getGraph().findNode(v1) == null || venueGraphManager.getGraph().findNode(v2) == null) {
+					System.out.println("-----------------------------------------------------------------------------");
+					System.out.println("Connection Failed: one or both Venue IDs were not found.");
+					System.out.println("-----------------------------------------------------------------------------");
+					break;
+				}
+				if (v1.equalsIgnoreCase(v2)) {
+					System.out.println("-----------------------------------------------------------------------------");
+					System.out.println("Connection Failed: cannot connect a venue to itself.");
+					System.out.println("-----------------------------------------------------------------------------");
+					break;
+				}
+				
 				venueGraphManager.connectVenues(v1, v2);
 				activityHistory.logActivity("connected venues: " + v1 + " and " + v2);
 				System.out.println("-----------------------------------------------------------------------------");

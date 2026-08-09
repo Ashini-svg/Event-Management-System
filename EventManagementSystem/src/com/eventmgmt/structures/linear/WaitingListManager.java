@@ -73,7 +73,7 @@ public class WaitingListManager {
         }
         
         if (matched == null) {
-        	System.out.println("No one is waiting for event " + eventId +".");
+        	System.out.println("No one is waiting for event " + eventId + ".");
         	return null;
         }
         
