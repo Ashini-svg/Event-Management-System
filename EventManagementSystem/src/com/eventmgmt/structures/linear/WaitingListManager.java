@@ -85,6 +85,34 @@ public class WaitingListManager {
     public int getWaitingCount() {
     	return waitingQueue.getSize();
     }
+    
+    // Remove one specific attendee's waiting entry for one specific event (used by undo)
+    public boolean removeFromWaitingList(String eventId, String attendeeId) {
+    	
+    	if (waitingQueue.isEmpty()) {
+    		return false;
+    	}
+    	
+    	int originalSize = waitingQueue.getSize();
+    	boolean removed = false;
+    	Queue<WaitingEntry> remaining = new Queue<>();
+    	
+    	for (int i = 0; i < originalSize; i++) {
+    		WaitingEntry entry = waitingQueue.dequeue();
+    		
+    		if (!removed && entry.getEventId().equalsIgnoreCase(eventId)
+    				&& entry.getAttendee().getAttendeeId().equalsIgnoreCase(attendeeId)) {
+    			removed = true;
+    			
+    		} else {
+    			remaining.enqueue(entry);
+    		}
+    	}
+    	while (!remaining.isEmpty()) {
+    		waitingQueue.enqueue(remaining.dequeue());
+    	}
+    	return removed;
+    }
 
     // Display Waiting List (shows which event each attendee is waiting for)
     public void displayWaitingList() {

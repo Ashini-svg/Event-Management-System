@@ -1,20 +1,52 @@
 package com.eventmgmt.structures.linear;
 
 public class ActivityHistory {
+	
+	// Pairs a description with the code needed to reverse it
+	public static class UndoableAction {
+		private final String description;
+		private final Runnable undo;
+		
+		public UndoableAction(String description, Runnable undo) {
+			this.description = description;
+			this.undo = undo;
+		}
+		
+		public String getDescription() {
+			return description;
+		}
+		
+		public void runUndo() {
+			if (undo != null) {
+				undo.run();
+			}
+		}
+		
+		@Override
+		public String toString() {
+			return description;
+		}
+		
+	}
 
-    private Stack<String> historyStack;
+    private Stack<UndoableAction> historyStack;
 
     // Constructor
     public ActivityHistory() {
         historyStack = new Stack<>();
     }
 
-    // Log Activity
+    // Log an activity with no reversal available
     public void logActivity(String activity) {
-
-        historyStack.push(activity);
-
-        System.out.println("Activity Logged: " + activity);
+    	logActivity(activity, null);
+    }
+    
+    
+    // Log an activity together with the code needed to reverse it
+    public void logActivity(String activity, Runnable undo) {
+    	historyStack.push(new UndoableAction(activity, undo));
+    	
+    	System.out.println("Activity logged: " + activity);
     }
 
     // Undo Last Activity
@@ -25,11 +57,12 @@ public class ActivityHistory {
             return null;
         }
 
-        String activity = historyStack.pop();
+        UndoableAction action = historyStack.pop();
+        action.runUndo();
 
-        System.out.println("Undo Activity: " + activity);
+        System.out.println("Undo Activity: " + action.getDescription());
 
-        return activity;
+        return action.getDescription();
     }
 
     // View Latest Activity

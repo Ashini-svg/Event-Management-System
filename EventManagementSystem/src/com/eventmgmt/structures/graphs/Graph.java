@@ -56,6 +56,31 @@ public class Graph {
 		}
 	}
 	
+	// Disconnect two venues (used by undo)
+	public void removeConnection(String venueId1, String venueId2) {
+		
+		GraphNode node1 = findNode(venueId1);
+		GraphNode node2 = findNode(venueId2);
+		
+		if (node1 != null && node2 != null) {
+			node1.getAdjacentNodes().remove(node2);
+			node2.getAdjacentNodes().remove(node1);
+		}
+	}
+	
+	// Remove a venue node any connections to it (used by undo)
+	public boolean removeNode(String venueId) {
+		
+		GraphNode node = findNode(venueId);
+		if (node == null) return false;
+		
+		for (GraphNode other : nodes) {
+			other.getAdjacentNodes().remove(node);
+		}
+		nodes.remove(node);
+		return true;
+	}
+	
 	
 	// Display the graph as an adjacency list
 	public void displayGraph() {

@@ -94,7 +94,12 @@ public class SubMenuHandler {
 				
 				if (venueDAO.saveVenue(venue)) {
 					venueGraphManager.addVenue(venue);
-					activityHistory.logActivity("added venue: " + id);
+					
+					activityHistory.logActivity("added venue: " + id, () -> {
+						venueDAO.deleteVenue(id);
+						venueGraphManager.getGraph().removeNode(id);
+					});
+					
 					System.out.println("-----------------------------------------------------------------------------");
 					System.out.println("Venue added successfully!");
 					System.out.println("-----------------------------------------------------------------------------");
@@ -121,7 +126,9 @@ public class SubMenuHandler {
 				}
 				
 				venueGraphManager.connectVenues(v1, v2);
-				activityHistory.logActivity("connected venues: " + v1 + " and " + v2);
+				activityHistory.logActivity("connected venues: " + v1 + " and " + v2, () -> {
+					venueGraphManager.getGraph().removeConnection(v1, v2);
+				});
 				System.out.println("-----------------------------------------------------------------------------");
 				System.out.println("Venues connected successfully!");
 				System.out.println("-----------------------------------------------------------------------------");
@@ -197,7 +204,12 @@ public class SubMenuHandler {
 				if (eventDAO.saveEvent(event)) {
 					eventAVLManager.addEvent(event);
 					eventBSTManager.addEvent(event);
-					activityHistory.logActivity("added event: " + id);
+					
+					activityHistory.logActivity("added event: " + id, () -> {
+						eventDAO.deleteEvent(id);
+						eventAVLManager.removeEvent(id);
+						eventBSTManager.deleteEvent(id);
+					});
 					System.out.println("-----------------------------------------------------------------------------");
 					System.out.println("Event added successfully!");
 					System.out.println("-----------------------------------------------------------------------------");
@@ -221,11 +233,19 @@ public class SubMenuHandler {
 				System.out.println("-----------------------------------------------------------------------------");
 				System.out.print("Enter Event ID to remove: ");
 				String id = scanner.nextLine();
+				Event existingEvent = eventAVLManager.getEventById(id);
 				
 				if (eventDAO.deleteEvent(id)) {
 					eventAVLManager.removeEvent(id);
 					eventBSTManager.deleteEvent(id);
-					activityHistory.logActivity("removed event: " + id);
+					
+					activityHistory.logActivity("removed event: " + id,() -> {
+						if (existingEvent != null) {
+							eventDAO.saveEvent(existingEvent);
+							eventAVLManager.addEvent(existingEvent);
+							eventBSTManager.addEvent(existingEvent);
+						}
+					});
 					System.out.println("-----------------------------------------------------------------------------");
 					System.out.println("Event removed successfully!");
 					System.out.println("-----------------------------------------------------------------------------");
@@ -319,7 +339,13 @@ public class SubMenuHandler {
 				if (attendeeDAO.saveAttendee(attendee)) {
 					attendeeHashManager.registerAttendee(attendee);
 					attendeeManager.addAttendee(attendee);
-					activityHistory.logActivity("registered attendee: " + id);
+					
+					activityHistory.logActivity("registered attendee: " + id, () -> {
+						attendeeDAO.deleteAttendee(id);
+						attendeeHashManager.removeAttendee(id);
+						attendeeSet.remove(id);
+						attendeeManager.deleteAttendee(id);
+					});
 					System.out.println("-----------------------------------------------------------------------------");
 					System.out.println("Attendee registered successfully!");
 					System.out.println("-----------------------------------------------------------------------------");
@@ -349,6 +375,10 @@ public class SubMenuHandler {
 				System.out.println("-----------------------------------------------------------------------------");
 				System.out.print("Enter Attendee ID to update: ");
 				String id = scanner.nextLine();
+				Attendee before = attendeeManager.searchAttendee(id);
+				String oldName = (before != null) ? before.getName() : null;
+				String oldEmail = (before != null) ? before.getEmail() : null;
+				
 				System.out.print("Enter new Name: ");
 				String newName = scanner.nextLine();
 				System.out.print("Enter new Email: ");
@@ -360,7 +390,15 @@ public class SubMenuHandler {
 					Attendee updatedAttendee = attendeeManager.searchAttendee(id);
 					attendeeDAO.saveAttendee(updatedAttendee);
 					attendeeHashManager.registerAttendee(updatedAttendee);
-					activityHistory.logActivity("updated attendee: " + id);
+					
+					activityHistory.logActivity("updated attendee: " + id, () -> {
+						if (oldName != null) {
+							attendeeManager.updateAttendee(id, oldName, oldEmail);
+							Attendee reverted = attendeeManager.searchAttendee(id);
+							attendeeDAO.saveAttendee(reverted);
+							attendeeHashManager.registerAttendee(reverted);
+						}
+					});
 					System.out.println("-----------------------------------------------------------------------------");
 					System.out.println("Attendee updated successfully.");
 					System.out.println("-----------------------------------------------------------------------------");
@@ -376,12 +414,21 @@ public class SubMenuHandler {
 				System.out.println("-----------------------------------------------------------------------------");
 				System.out.print("Enter Attendee ID to remove: ");
 				String id = scanner.nextLine();
+				Attendee existingAttendee = attendeeManager.searchAttendee(id);
 				
 				if (attendeeDAO.deleteAttendee(id)) {
 					attendeeHashManager.removeAttendee(id);
 					attendeeSet.remove(id);
 					attendeeManager.deleteAttendee(id);
-					activityHistory.logActivity("removed attendee: " + id);
+					
+					activityHistory.logActivity("removed attendee: " + id, () -> {
+						if (existingAttendee != null) {
+							attendeeDAO.saveAttendee(existingAttendee);
+							attendeeHashManager.registerAttendee(existingAttendee);
+							attendeeSet.add(existingAttendee);
+							attendeeManager.addAttendee(existingAttendee);
+						}
+					});
 					System.out.println("-----------------------------------------------------------------------------");
 					System.out.println("Attendee removed successfully!");
 					System.out.println("-----------------------------------------------------------------------------");
@@ -466,7 +513,10 @@ public class SubMenuHandler {
 					System.out.println("Event is full! Adding attendee to Waiting List Queue...");
 					System.out.println("-----------------------------------------------------------------------------");
 					waitingListManager.addToWaitingList(eventId, attendee);
-					activityHistory.logActivity("added " + attendeeId + " to waiting list for " + eventId);
+					
+					activityHistory.logActivity("added " + attendeeId + " to waiting list for " + eventId, () -> {
+						waitingListManager.removeFromWaitingList(eventId, attendeeId);
+					});
 					
 				} else {
 					String bookingId = "B-" + System.currentTimeMillis();
@@ -475,7 +525,12 @@ public class SubMenuHandler {
 					if (bookingDAO.addBooking(booking)) {
 						event.incrementAttendees();
 						eventDAO.saveEvent(event);
-						activityHistory.logActivity("created booking: " + bookingId);
+						
+						activityHistory.logActivity("created booking: " + bookingId, () -> {
+							bookingDAO.deleteBooking(bookingId);
+							event.decrementAttendees();
+							eventDAO.saveEvent(event);
+						});
 						System.out.println("-----------------------------------------------------------------------------");
 						System.out.println("Booking successful! ID: " + bookingId);
 						System.out.println("-----------------------------------------------------------------------------");
@@ -505,13 +560,19 @@ public class SubMenuHandler {
 				}
 				Attendee next = waitingListManager.processNextAttendeeForEvent(eventId);
 				if (next != null) {
-					String bookingId = "B-" + System.currentTimeMillis() % 10000;
+					String bookingId = "B-" + System.currentTimeMillis();
 					Booking booking = new Booking(bookingId, eventId, next.getAttendeeId(), LocalDateTime.now());
 					
 					if (bookingDAO.addBooking(booking)) {
 						event.incrementAttendees();
 						eventDAO.saveEvent(event);
-						activityHistory.logActivity("processed waiting list attendee: " + next.getAttendeeId() + " into booking: " + bookingId);
+						
+						activityHistory.logActivity("processed waiting list attendee: " + next.getAttendeeId() + " into booking: " + bookingId, () -> {
+							bookingDAO.deleteBooking(bookingId);
+							event.decrementAttendees();
+							eventDAO.saveEvent(event);
+							waitingListManager.addToWaitingList(eventId, next);
+						});
 						System.out.println("Booking created for " + next.getName() + "! ID: " + bookingId);
 					}
 				}
