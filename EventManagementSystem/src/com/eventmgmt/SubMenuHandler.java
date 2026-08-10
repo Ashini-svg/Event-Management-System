@@ -348,6 +348,7 @@ public class SubMenuHandler {
 					System.out.println("-----------------------------------------------------------------------------");
 					System.out.println("Registration blocked: Email already registered to another attendee.");
 					System.out.println("-----------------------------------------------------------------------------");
+					break;
 				}
 				if (!attendeeSet.add(attendee)) {
 					System.out.println("-----------------------------------------------------------------------------");
@@ -588,6 +589,7 @@ public class SubMenuHandler {
 					break;
 				}
 				Attendee next = waitingListManager.processNextAttendeeForEvent(eventId);
+				
 				if (next != null) {
 					String bookingId = "B-" + System.currentTimeMillis();
 					Booking booking = new Booking(bookingId, eventId, next.getAttendeeId(), LocalDateTime.now());
@@ -608,6 +610,8 @@ public class SubMenuHandler {
 						waitingListManager.addToWaitingList(eventId, next);
 						System.out.println("Booking failed. Please try again.");
 					}
+				} else {
+					System.out.println("No waiting list entries found for event ID: " + eventId);
 				}
 				System.out.println("-----------------------------------------------------------------------------");
 			}

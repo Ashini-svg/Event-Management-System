@@ -23,15 +23,14 @@ public class BST {
         if (current == null) {
             return new BSTNode(event);
         }
-
-        //Go to left subtree
-        if (event.compareTo(current.getEvent()) < 0) {
-            current.setLeft(insertRecursive(current.getLeft(), event));
-        }
-
-        //Go to right subtree
-        else if (event.compareTo(current.getEvent()) > 0) {
-            current.setRight(insertRecursive(current.getRight(), event));
+        
+        int comparison = event.getEventId().compareToIgnoreCase(current.getEvent().getEventId());
+        
+        if (comparison < 0) {
+            current.setLeft(insertRecursive(current.getLeft(), event));  //Go to left subtree
+            
+        } else if (comparison > 0) {
+            current.setRight(insertRecursive(current.getRight(), event));  //Go to right subtree
         }
 
         //Duplicate IDs are ignored
