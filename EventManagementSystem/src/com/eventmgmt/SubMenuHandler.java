@@ -99,7 +99,6 @@ public class SubMenuHandler {
 						venueDAO.deleteVenue(id);
 						venueGraphManager.getGraph().removeNode(id);
 					});
-					
 					System.out.println("-----------------------------------------------------------------------------");
 					System.out.println("Venue added successfully!");
 					System.out.println("-----------------------------------------------------------------------------");
@@ -249,6 +248,11 @@ public class SubMenuHandler {
 					System.out.println("-----------------------------------------------------------------------------");
 					System.out.println("Event removed successfully!");
 					System.out.println("-----------------------------------------------------------------------------");
+					
+				} else {
+					System.out.println("-----------------------------------------------------------------------------");
+					System.out.println("Event not found. Removal failed.");
+					System.out.println("-----------------------------------------------------------------------------");
 				}
 			}
 			case 5 -> {
@@ -330,6 +334,21 @@ public class SubMenuHandler {
 				
 				Attendee attendee = new Attendee(id, name, email);
 				
+				boolean emailTaken = false;
+				ListNode current = attendeeManager.getAttendeeList().getHead();
+				
+				while (current != null) {
+					if (current.getAttendee().getEmail() != null && current.getAttendee().getEmail().equalsIgnoreCase(email)) {
+						emailTaken = true;
+						break;
+					}
+					current = current.getNext();
+				}
+				if (emailTaken) {
+					System.out.println("-----------------------------------------------------------------------------");
+					System.out.println("Registration blocked: Email already registered to another attendee.");
+					System.out.println("-----------------------------------------------------------------------------");
+				}
 				if (!attendeeSet.add(attendee)) {
 					System.out.println("-----------------------------------------------------------------------------");
 					System.out.println("Registration blocked: Attendee ID or Email already registered.");
@@ -431,6 +450,11 @@ public class SubMenuHandler {
 					});
 					System.out.println("-----------------------------------------------------------------------------");
 					System.out.println("Attendee removed successfully!");
+					System.out.println("-----------------------------------------------------------------------------");
+					
+				} else {
+					System.out.println("-----------------------------------------------------------------------------");
+					System.out.println("Attendee not found. Removal failed.");
 					System.out.println("-----------------------------------------------------------------------------");
 				}
 			}
@@ -534,6 +558,11 @@ public class SubMenuHandler {
 						System.out.println("-----------------------------------------------------------------------------");
 						System.out.println("Booking successful! ID: " + bookingId);
 						System.out.println("-----------------------------------------------------------------------------");
+						
+					} else {
+						System.out.println("-----------------------------------------------------------------------------");
+						System.out.println("Booking failed. Please try again.");
+						System.out.println("-----------------------------------------------------------------------------");
 					}
 				}
 			}
@@ -574,6 +603,10 @@ public class SubMenuHandler {
 							waitingListManager.addToWaitingList(eventId, next);
 						});
 						System.out.println("Booking created for " + next.getName() + "! ID: " + bookingId);
+						
+					} else {
+						waitingListManager.addToWaitingList(eventId, next);
+						System.out.println("Booking failed. Please try again.");
 					}
 				}
 				System.out.println("-----------------------------------------------------------------------------");
