@@ -63,6 +63,14 @@ public class SubMenuHandler {
 		}
 	}
 	
+	// Null-safe list-to-array helper
+	public static <T> T[] safeToArray(List<T> list, T[] emptyArray) {
+		if (list == null) {
+			return emptyArray;
+		}
+		return list.toArray(emptyArray);
+	}
+	
 	// 1. Venue & Graph Management sub-menu
 	public static void manageVenuesAndGraph() {
 		boolean back = false;
@@ -278,7 +286,7 @@ public class SubMenuHandler {
 				System.out.println("-----------------------------------------------------------------------------");
 				
 				int mode = readIntInput("Choice: ");
-				Event[] events = eventDAO.getAllEvents().toArray(new Event[0]);
+				Event[] events = safeToArray(eventDAO.getAllEvents(), new Event[0]);
 				
 				if (mode == 1) {
 					System.out.print("Enter Event ID: ");
@@ -471,7 +479,7 @@ public class SubMenuHandler {
 				System.out.println("2. Attendee Name");
 				
 				int mode = readIntInput("Choice: ");
-				Attendee[] attendees = attendeeDAO.getAllAttendees().toArray(new Attendee[0]);
+				Attendee[] attendees = safeToArray(attendeeDAO.getAllAttendees(), new Attendee[0]);
 				
 				if (mode == 1) {
 					System.out.print("Enter Attendee ID: ");
@@ -695,62 +703,59 @@ public class SubMenuHandler {
 			
 			switch (choice) {
 			case 1 -> {
-				List<Venue> venueList = venueDAO.getAllVenues();
-				Venue[] venues = venueList.toArray(new Venue[0]);
+				Venue[] venues = safeToArray(venueDAO.getAllVenues(), new Venue[0]);
 				new MergeSort().sort(venues);
 				
 				System.out.println("-----------------------------------------------------------------------------");
 				System.out.println("Venues sorted via Merge Sort: ");
 				for (Venue v : venues) {
-					System.out.println(" - " + v.getVenueName());
+					if (v != null) System.out.println(" - " + v.getVenueName());
 				}
 				System.out.println("-----------------------------------------------------------------------------");
 			}
 			case 2 -> {
-				List<Attendee> attendeeList = attendeeDAO.getAllAttendees();
-				Attendee[] attendees = attendeeList.toArray(new Attendee[0]);
-				QuickSort.sort(attendees, 0, attendees.length - 1);
+				Attendee[] attendees = safeToArray(attendeeDAO.getAllAttendees(), new Attendee[0]);
+				if (attendees.length > 0) {
+					QuickSort.sort(attendees, 0, attendees.length - 1);
+				}
 				
 				System.out.println("-----------------------------------------------------------------------------");
 				System.out.println("Attendees sorted via Quick Sort (by ID): ");
 				for (Attendee a : attendees) {
-					System.out.println(" - " + a.getAttendeeId() + ": " + a.getName());
+					if (a != null) System.out.println(" - " + a.getAttendeeId() + ": " + a.getName());
 				}
 				System.out.println("-----------------------------------------------------------------------------");
 			}
 			case 3 -> {
-				List<Venue> venueList = venueDAO.getAllVenues();
-				Venue[] venues = venueList.toArray(new Venue[0]);
+				Venue[] venues = safeToArray(venueDAO.getAllVenues(), new Venue[0]);
 				SelectionSort.sort(venues);
 				
 				System.out.println("-----------------------------------------------------------------------------");
 				System.out.println("Venues sorted via Selection Sort: ");
 				for (Venue v : venues) {
-					System.out.println(" - " + v.getVenueName());
+					if (v != null) System.out.println(" - " + v.getVenueName());
 				}
 				System.out.println("-----------------------------------------------------------------------------");
 			}
 			case 4 -> {
-				List<Event> eventList = eventDAO.getAllEvents();
-				Event[] events = eventList.toArray(new Event[0]);
+				Event[] events = safeToArray(eventDAO.getAllEvents(), new Event[0]);
 				InsertionSort.sort(events);
 				
 				System.out.println("-----------------------------------------------------------------------------");
 				System.out.println("Events sorted via Insertion Sort (by ID): ");
 				for (Event e : events) {
-					System.out.println(" - " + e.getEventId() + ": " + e.getTitle());
+					if (e != null) System.out.println(" - " + e.getEventId() + ": " + e.getTitle());
 				}
 				System.out.println("-----------------------------------------------------------------------------");
 			}
 			case 5 -> {
-				List<Attendee> attendeeList = attendeeDAO.getAllAttendees();
-				Attendee[] attendees = attendeeList.toArray(new Attendee[0]);
+				Attendee[] attendees = safeToArray(attendeeDAO.getAllAttendees(), new Attendee[0]);
 				new BubbleSort().sortByName(attendees);
 				
 				System.out.println("-----------------------------------------------------------------------------");
 				System.out.println("Attendees sorted via Bubble Sort (by Name): ");
 				for (Attendee a : attendees) {
-					System.out.println(" - " + a.getName() + " (" + a.getAttendeeId() + ")");
+					if (a != null) System.out.println(" - " + a.getName() + " (" + a.getAttendeeId() + ")");
 				}
 				System.out.println("-----------------------------------------------------------------------------");
 			}

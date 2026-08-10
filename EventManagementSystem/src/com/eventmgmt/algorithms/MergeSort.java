@@ -54,9 +54,10 @@ public class MergeSort {
 
 	    while (i < leftSize && j < rightSize) {
 
-	        if (leftArray[i].compareTo(rightArray[j]) <= 0) {
+	        if (compare(leftArray[i], rightArray[j]) <= 0) {
 	            venues[k] = leftArray[i];
 	            i++;
+	            
 	        } else {
 	            venues[k] = rightArray[j];
 	            j++;
@@ -76,6 +77,13 @@ public class MergeSort {
 	        j++;
 	        k++;
 	    }
+	}
+	
+	private static int compare(Venue v1, Venue v2) {
+		if (v1 == null && v2 == null) return 0;
+		if (v1 == null) return 1;
+		if (v2 == null) return -1;
+		return v1.compareTo(v2);
 	}
 
 }

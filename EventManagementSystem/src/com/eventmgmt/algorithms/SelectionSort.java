@@ -1,6 +1,13 @@
 package com.eventmgmt.algorithms;
 
 public class SelectionSort {
+	
+	private static <T extends Comparable<T>> int compare(T a, T b) {
+		if (a == null && b == null) return 0;
+		if (a == null) return 1;
+		if (b == null) return -1;
+		return a.compareTo(b);
+	}
 
     // Generic Selection Sort that works on Event, Attendee, and Venue
     public static <T extends Comparable<T>> void sort(T[] array) {
@@ -18,7 +25,7 @@ public class SelectionSort {
 
             // Look through the remaining unsorted items to find the real minimum
             for (int j = i + 1; j < n; j++) {
-                if (array[j].compareTo(array[minIndex]) < 0) {
+                if (compare(array[j], array[minIndex]) < 0) {
                     minIndex = j;
                 }
             }
