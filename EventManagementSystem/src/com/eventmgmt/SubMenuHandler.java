@@ -618,8 +618,6 @@ public class SubMenuHandler {
 						waitingListManager.addToWaitingList(eventId, next);
 						System.out.println("Booking failed. Please try again.");
 					}
-				} else {
-					System.out.println("No waiting list entries found for event ID: " + eventId);
 				}
 				System.out.println("-----------------------------------------------------------------------------");
 			}
