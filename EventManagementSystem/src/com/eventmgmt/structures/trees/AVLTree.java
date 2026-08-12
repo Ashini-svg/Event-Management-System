@@ -227,7 +227,7 @@ public class AVLTree<T extends Comparable<T>> {
     // Traversal Methods
     // In-order Traversal
     public void inorderTraversal() {
-        System.out.println("\n--- Inorder Traversal ---");
+        System.out.println("\nInorder Traversal: \n");
         inorderRecursive(this.root);
     }
 
@@ -235,14 +235,14 @@ public class AVLTree<T extends Comparable<T>> {
         if (node != null) {
             inorderRecursive(node.getLeft());
             System.out.println(node.getData());
-            System.out.println("---------------------------------");
+            System.out.println();
             inorderRecursive(node.getRight());
         }
     }
 
     // Pre-order Traversal
     public void preorderTraversal() {
-        System.out.println("\n--- Preorder Traversal ---");
+        System.out.println("\nPreorder Traversal: \n");
         preorderRecursive(this.root);
     }
 
@@ -256,7 +256,7 @@ public class AVLTree<T extends Comparable<T>> {
 
     // Post-order Traversal
     public void postorderTraversal() {
-        System.out.println("\n--- Postorder Traversal ---");
+        System.out.println("\nPostorder Traversal: \n");
         postorderRecursive(this.root);
     }
 

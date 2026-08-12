@@ -128,7 +128,7 @@ public class BST {
         	inorderRecursive(current.getLeft());
 
         	System.out.println(current.getEvent());
-            System.out.println();
+        	System.out.println();
 
             inorderRecursive(current.getRight());
         }
@@ -144,7 +144,7 @@ public class BST {
         if (current != null) {
 
         	System.out.println(current.getEvent());
-            System.out.println();
+        	System.out.println();
 
             preorderRecursive(current.getLeft());
 
@@ -166,7 +166,7 @@ public class BST {
         	postorderRecursive(current.getRight());
 
         	System.out.println(current.getEvent());
-            System.out.println();
+        	System.out.println();
         }
     }
 }

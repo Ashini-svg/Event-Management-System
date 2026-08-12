@@ -43,7 +43,7 @@ public class LinkedList {
         while (current != null) {
 
             System.out.println(current.getAttendee());
-            System.out.println("---------------------------");
+            System.out.println();
 
             current = current.getNext();
         }
