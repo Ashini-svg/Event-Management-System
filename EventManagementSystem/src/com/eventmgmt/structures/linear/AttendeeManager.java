@@ -16,7 +16,6 @@ public class AttendeeManager {
 
         attendeeList.addAttendee(attendee);
 
-        System.out.println("Attendee added successfully.");
     }
 
     // Display Attendees

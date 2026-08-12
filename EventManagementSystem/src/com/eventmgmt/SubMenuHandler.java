@@ -270,11 +270,11 @@ public class SubMenuHandler {
 			}
 			case 6 -> {
 				System.out.println("-----------------------------------------------------------------------------");
-				System.out.println("In-order:");
+				System.out.println("\nIn-order:\n");
 				eventBSTManager.displayInOrder();
-				System.out.println("Pre-order:");
+				System.out.println("\nPre-order:\n");
 				eventBSTManager.displayPreOrder();
-				System.out.println("Post-order:");
+				System.out.println("\nPost-order:\n");
 				eventBSTManager.displayPostOrder();
 				System.out.println("-----------------------------------------------------------------------------");
 			}

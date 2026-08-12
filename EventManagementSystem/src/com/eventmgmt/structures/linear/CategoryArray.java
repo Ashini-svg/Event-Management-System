@@ -15,7 +15,7 @@ public class CategoryArray {
 	// Display all categories
 	public void displayCategories() {
 		
-		System.out.println("===== Event Categories =====");
+		System.out.println("Event Categories: ");
 		
 		 for (int i = 0; i < categories.length; i++) {
 	            System.out.println((i + 1) + ". " + categories[i]);
