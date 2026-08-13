@@ -36,12 +36,4 @@ public class SelectionSort {
             array[i] = temp;
         }
     }
-    
-    // Execution time measurement method for Task 3 benchmarking
-    public static <T extends Comparable<T>> long sortWithTimer(T[] array) {
-        long startTime = System.nanoTime(); // Record start time
-        sort(array);                        // Perform sort
-        long endTime = System.nanoTime();   // Record end time
-        return (endTime - startTime);       // Return total duration in nanoseconds
-    }
 }
