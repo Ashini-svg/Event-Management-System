@@ -1,107 +1,274 @@
 # Event Management System
 
-A Java-based desktop application developed to simplify the management of events, venues, and related information. The system combines object-oriented programming with data structures and algorithms to provide an organized and efficient event management solution.
-
 ## Overview
 
-The **Event Management System** was developed as a group project to demonstrate the practical application of Java programming, object-oriented design, data structures, algorithms, and collaborative software development.
+The **Event Management System** is a Java-based desktop application developed as a group project to provide an organized way of managing events, venues, attendees, and bookings.
 
-The application provides a structured way to manage event-related information while applying suitable data structures and algorithms for storing, searching, and processing data.
+The system was designed to demonstrate the practical application of **Object-Oriented Programming, data structures and algorithms, database management, and collaborative software development**.
 
-The project was developed collaboratively using **Git and GitHub**, with different team members responsible for different components of the system.
+The application combines a Java-based interface with a relational database and a range of custom data structures and algorithms to store, search, sort, organize, and process information efficiently.
+
+The project was developed collaboratively using **Git and GitHub**, with team members contributing to different areas of the system.
+
+---
 
 ## Key Features
 
+The Event Management System provides functionality for:
+
 * Event management
 * Venue management
+* Attendee management
+* Booking management
 * Event and venue information handling
-* Efficient searching and data processing
+* Database-backed data storage
+* Searching and sorting of data
 * Graph-based data representation
 * Breadth-First Search (BFS)
-* Object-oriented application design
-* Structured and modular code organization
+* Depth-First Search (DFS)
+* Hash-based data management
+* Linear data structures
+* Binary Search Tree (BST) and AVL Tree implementations
+* Waiting-list management
+* Activity-history management
 * Input validation and error handling
-* User-friendly application interface
+* Modular and structured application design
+
+---
 
 ## Technologies Used
 
-| Technology                       | Purpose                                        |
-| -------------------------------- | ---------------------------------------------- |
-| **Java**                         | Main programming language                      |
-| **Eclipse IDE**                  | Development and testing                        |
-| **Git**                          | Version control                                |
-| **GitHub**                       | Source code management and collaboration       |
-| **OOP**                          | Application architecture and code organization |
-| **Data Structures & Algorithms** | Data management and processing                 |
+| Technology                            | Purpose                                                                        |
+| ------------------------------------- | ------------------------------------------------------------------------------ |
+| **Java**                              | Main programming language used to develop the application                      |
+| **Eclipse IDE**                       | Used for development, debugging, and testing                                   |
+| **SQL**                               | Used to define and manage the relational database                              |
+| **JDBC**                              | Used to connect the Java application with the database                         |
+| **Relational Database**               | Used for persistent storage and management of application data                 |
+| **Git**                               | Version control and source code management                                     |
+| **GitHub**                            | Collaborative development, branch management, and code integration             |
+| **Object-Oriented Programming (OOP)** | Used to design and organize application classes and components                 |
+| **Data Structures & Algorithms**      | Used for efficient data storage, searching, sorting, traversal, and processing |
+
+---
 
 ## Data Structures & Algorithms
 
-Data structures and algorithms are an important part of the system.
+Data structures and algorithms are a major part of the Event Management System. Different structures and algorithms were implemented based on the requirements of the application to improve data organization, searching, sorting, and processing.
 
-The project includes implementations such as:
+### Searching and Sorting Algorithms
 
-* **Graph** – Represents relationships between entities in the system.
-* **GraphNode** – Represents individual nodes within the graph.
-* **Breadth-First Search (BFS)** – Used to traverse and explore graph connections.
-* **Lists and collections** – Used to store and manage application data.
+The project includes:
 
-These structures were selected to demonstrate how algorithmic concepts can be applied to a real-world software application.
+* **Bubble Sort**
+* **Insertion Sort**
+* **Merge Sort**
+* **Quick Sort**
+* **Selection Sort**
+* **Linear Search**
+
+These algorithms demonstrate different approaches to sorting and searching application data.
+
+### Graph Data Structures and Algorithms
+
+The project includes:
+
+* **Graph**
+* **GraphNode**
+* **Breadth-First Search (BFS)**
+* **Depth-First Search (DFS)**
+* **VenueGraphManager**
+
+Graphs are used to represent relationships and connections within the system, while BFS and DFS provide methods for traversing and exploring those connections.
+
+### Hashing
+
+The system includes custom hashing implementations such as:
+
+* **HashTable**
+* **HashNode**
+* **AttendeeHashManager**
+* **SetADT**
+
+These structures provide efficient approaches to storing, managing, and retrieving information.
+
+### Linear Data Structures
+
+The following linear data structures and supporting classes were implemented:
+
+* **LinkedList**
+* **ListNode**
+* **Stack**
+* **Queue**
+* **CategoryArray**
+* **ActivityHistory**
+* **AttendeeManager**
+* **WaitingListManager**
+
+These structures are used in different parts of the application to manage ordered data, activity records, attendees, and waiting lists.
+
+### Tree Data Structures
+
+The project also includes tree-based structures:
+
+* **Binary Search Tree (BST)**
+* **BSTNode**
+* **AVL Tree**
+* **AVLNode**
+* **EventBSTManager**
+* **EventAVLManager**
+
+These structures demonstrate different approaches to organizing and efficiently accessing event-related data.
+
+Overall, the implementation of these structures and algorithms demonstrates how core computer science concepts can be applied to a practical software application.
+
+---
+
+## Database
+
+The Event Management System uses a **relational database** to provide persistent storage for application data.
+
+Database operations are organized using **Data Access Object (DAO)** classes, keeping database-related operations separate from the rest of the application.
+
+The database layer includes:
+
+* **DBConnection.java** – Establishes the connection between the Java application and the database.
+* **AttendeeDAO.java** – Handles attendee-related database operations.
+* **BookingDAO.java** – Handles booking-related database operations.
+* **EventDAO.java** – Handles event-related database operations.
+* **VenueDAO.java** – Handles venue-related database operations.
+* **schema.sql** – Contains the database schema required to create the necessary database structures.
+
+This approach allows the system to store and retrieve application data while keeping the database layer organized and maintainable.
+
+---
 
 ## Project Structure
 
-The project follows a modular package structure to keep related classes organized and make the application easier to maintain.
+The project follows a modular package structure, with each package responsible for a specific part of the application.
 
 ```text
-src/
-├── model/
-│   ├── Event.java
-│   ├── Venue.java
-│   └── ...
+EventManagementSystem/
 │
-├── structures/
-│   └── graphs/
-│       ├── Graph.java
-│       ├── GraphNode.java
-│       └── ...
+├── src/
+│   │
+│   ├── com.eventmgmt/
+│   │   ├── MainApplication.java
+│   │   └── SubMenuHandler.java
+│   │
+│   ├── com.eventmgmt.algorithms/
+│   │   ├── BubbleSort.java
+│   │   ├── InsertionSort.java
+│   │   ├── LinearSearch.java
+│   │   ├── MergeSort.java
+│   │   ├── QuickSort.java
+│   │   └── SelectionSort.java
+│   │
+│   ├── com.eventmgmt.database/
+│   │   ├── AttendeeDAO.java
+│   │   ├── BookingDAO.java
+│   │   ├── DBConnection.java
+│   │   ├── EventDAO.java
+│   │   └── VenueDAO.java
+│   │
+│   ├── com.eventmgmt.model/
+│   │   ├── Attendee.java
+│   │   ├── Booking.java
+│   │   ├── Event.java
+│   │   └── Venue.java
+│   │
+│   ├── com.eventmgmt.structures.graphs/
+│   │   ├── BFS.java
+│   │   ├── DFS.java
+│   │   ├── Graph.java
+│   │   ├── GraphNode.java
+│   │   └── VenueGraphManager.java
+│   │
+│   ├── com.eventmgmt.structures.hashing/
+│   │   ├── AttendeeHashManager.java
+│   │   ├── HashNode.java
+│   │   ├── HashTable.java
+│   │   └── SetADT.java
+│   │
+│   ├── com.eventmgmt.structures.linear/
+│   │   ├── ActivityHistory.java
+│   │   ├── AttendeeManager.java
+│   │   ├── CategoryArray.java
+│   │   ├── LinkedList.java
+│   │   ├── ListNode.java
+│   │   ├── Queue.java
+│   │   ├── Stack.java
+│   │   └── WaitingListManager.java
+│   │
+│   └── com.eventmgmt.structures.trees/
+│       ├── AVLNode.java
+│       ├── AVLTree.java
+│       ├── BST.java
+│       ├── BSTNode.java
+│       ├── EventAVLManager.java
+│       └── EventBSTManager.java
 │
-└── ...
+└── schema.sql
 ```
 
-The structure may vary slightly depending on the final organization of the source code.
+### Package Description
 
+| Package                              | Description                                                                                       |
+| ------------------------------------ | ------------------------------------------------------------------------------------------------- |
+| **com.eventmgmt**                    | Contains the main application entry point and menu handling.                                      |
+| **com.eventmgmt.algorithms**         | Contains searching and sorting algorithm implementations.                                         |
+| **com.eventmgmt.database**           | Contains database connectivity and DAO classes for database operations.                           |
+| **com.eventmgmt.model**              | Contains the main entities used by the system, including events, venues, attendees, and bookings. |
+| **com.eventmgmt.structures.graphs**  | Contains graph structures, graph managers, and BFS/DFS traversal algorithms.                      |
+| **com.eventmgmt.structures.hashing** | Contains hashing data structures and attendee hash management.                                    |
+| **com.eventmgmt.structures.linear**  | Contains linear data structures and supporting management classes.                                |
+| **com.eventmgmt.structures.trees**   | Contains BST and AVL tree implementations and event management classes.                           |
+| **schema.sql**                       | Defines the database schema used by the application.                                              |
+
+---
 
 ## Team Collaboration
 
-This project was developed collaboratively using **GitHub**.
+The project was developed collaboratively using **Git and GitHub**.
 
-The team used Git branches and pull requests to manage individual contributions, review changes, and integrate completed work into the main project.
+Git branches and pull requests were used to manage individual work, track changes, review contributions, and integrate completed components into the main project.
 
-This workflow helped us practice real-world software development and version control throughout the project.
+Working with GitHub also provided practical experience in collaborative software development, version control, and managing a shared codebase.
+
+---
 
 ## Project Outcomes
 
-Through the development of this project, we gained practical experience in:
+The development of this project provided practical experience in:
 
 * Java application development
-* Object-oriented programming
-* Data structures and algorithms
+* Object-Oriented Programming
+* Database connectivity and management
+* Data Access Object (DAO) design
+* Searching and sorting algorithms
 * Graph implementation and traversal
-* Software design and organization
-* Git and GitHub
-* Branching and collaborative development
+* Hashing
+* Linear data structures
+* Binary Search Trees and AVL Trees
+* Software structure and modular design
+* Git and GitHub collaboration
 * Debugging and testing
-* Working as a software development team
+* Team-based software development
 
-## Future Improvements
+---
 
-Although the current version of the system is complete, possible future improvements could include:
+## Future Enhancements
 
-* Adding a database for persistent data storage
-* Improving the user interface
-* Adding authentication and user roles
-* Providing advanced event search and filtering
-* Adding reporting and analytics features
-* Developing a web or mobile version of the system
+Although the current system has been completed, possible future enhancements include:
+
+* Improving the graphical user interface
+* Expanding database functionality
+* Adding user authentication and role-based access
+* Providing advanced event filtering and reporting
+* Adding additional analytics features
+* Developing a web-based or mobile version of the system
+
+---
 
 ## Project Status
 
@@ -109,9 +276,11 @@ Although the current version of the system is complete, possible future improvem
 
 The Event Management System has been successfully developed and completed as a university group project.
 
+---
+
 ## Contributors
 
-This project was developed by:
+This project was developed collaboratively by **Group 16**.
 
 * **Himasha Widhanapathirana**
 * **Lehan Luchitha**
@@ -120,6 +289,10 @@ This project was developed by:
 * **Oshan Priyawansha**
 * **Apoorwa Chandrarathna**
 
+
+---
+
 ## License
 
-This project was developed for academic purposes as part of a university coursework project.
+This project was developed for **academic purposes** as part of university coursework. It is not intended for commercial use.
+
