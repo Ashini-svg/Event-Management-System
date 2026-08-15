@@ -284,7 +284,7 @@ This project was developed collaboratively by **Group 16**.
 
 * **Himasha Widhanapathirana**
 * **Lehan Luchitha**
-* **Dhamsana Dissanayeka**
+* **Damsana Dissanayake**
 * **Ashini Samarasingha**
 * **Oshan Priyawansha**
 * **Apoorwa Chandrarathna**
